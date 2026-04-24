@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         m_rb.useGravity = false;
+        m_rb.constraints =  RigidbodyConstraints.FreezeRotationX | 
+                            RigidbodyConstraints.FreezeRotationY | 
+                            RigidbodyConstraints.FreezeRotationZ | 
+                            RigidbodyConstraints.FreezePositionY;
     }
 
     private void Update() => m_spriteRenderer.flipX = m_characterSide;
