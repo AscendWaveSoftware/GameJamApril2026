@@ -5,6 +5,7 @@ namespace Currency
 {
     [RequireComponent(typeof(GoldCoin))]
     [RequireComponent(typeof(SphereCollider))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class GoldCoinPickupHandler : MonoBehaviour
     {
         private GoldCoin _goldCoin;
