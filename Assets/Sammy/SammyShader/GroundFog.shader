@@ -18,6 +18,8 @@ Shader "Custom/GroundFog"
 
         _Distortion ("Distortion", Range(0, 1)) = 0.15
         _EdgeFade ("Edge Fade", Range(0, 1)) = 0.35
+
+        _WorldInfluence ("World Influence", Range(0, 0.05)) = 0.005
     }
 
     SubShader
@@ -65,6 +67,8 @@ Shader "Custom/GroundFog"
 
             float _GlobalSpeed;
 
+            float _WorldInfluence;
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -76,39 +80,46 @@ Shader "Custom/GroundFog"
                 float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 float3 positionOS : TEXCOORD1;
+                float3 positionWS : TEXCOORD2;
             };
 
             Varyings Vert(Attributes input)
             {
                 Varyings output;
-                output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
+
+                VertexPositionInputs posInputs = GetVertexPositionInputs(input.positionOS.xyz);
+
+                output.positionHCS = posInputs.positionCS;
                 output.uv = input.uv;
                 output.positionOS = input.positionOS.xyz;
+                output.positionWS = posInputs.positionWS;
+
                 return output;
             }
 
             float SampleNoise(float2 uv)
             {
-            float t = _Time.y * _GlobalSpeed;
+                float t = _Time.y * _GlobalSpeed;
 
-            float2 uv1 = uv * _NoiseScale + float2(_SpeedX, _SpeedY) * t;
-            float2 uv2 = uv * (_NoiseScale * 1.8) - float2(_SpeedY, _SpeedX) * t * 0.6;
+                float2 uv1 = uv * _NoiseScale + float2(_SpeedX, _SpeedY) * t;
+                float2 uv2 = uv * (_NoiseScale * 1.8) - float2(_SpeedY, _SpeedX) * t * 0.6;
 
-            float n1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv1).r;
-            float n2 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv2).r;
+                float n1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv1).r;
+                float n2 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv2).r;
 
-            return saturate((n1 * 0.65 + n2 * 0.35) * _NoiseStrength);
+                return saturate((n1 * 0.65 + n2 * 0.35) * _NoiseStrength);
             }
 
             half4 Frag(Varyings input) : SV_Target
             {
-                float2 uv = input.uv;
+       
+                float2 uv = input.uv + input.positionWS.xz * _WorldInfluence;
 
                 float distortionNoise = SAMPLE_TEXTURE2D(
-    _MainTex,
-    sampler_MainTex,
-    uv * _NoiseScale * 0.7 + float2(_SpeedX, _SpeedY) * _Time.y * _GlobalSpeed * 0.5
-).r;
+                    _MainTex,
+                    sampler_MainTex,
+                    uv * _NoiseScale * 0.7 + float2(_SpeedX, _SpeedY) * _Time.y * _GlobalSpeed * 0.5
+                ).r;
 
                 uv += (distortionNoise - 0.5) * _Distortion;
 
