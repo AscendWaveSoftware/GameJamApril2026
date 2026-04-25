@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_moveSpeed = 2.5f;
 
     Rigidbody m_rb;
-    private bool m_characterSide;
+    [SerializeField] private bool m_characterSide;
     private SpriteRenderer m_spriteRenderer;
     private Vector2 m_Movement;
 
@@ -24,16 +24,26 @@ public class PlayerMovement : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         m_rb.useGravity = false;
-        m_rb.constraints =  RigidbodyConstraints.FreezeRotationX | 
-                            RigidbodyConstraints.FreezeRotationY | 
-                            RigidbodyConstraints.FreezeRotationZ | 
+        m_rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                            RigidbodyConstraints.FreezeRotationY |
+                            RigidbodyConstraints.FreezeRotationZ |
                             RigidbodyConstraints.FreezePositionY;
+    }
+
+    private void Update()
+    {
+        m_spriteRenderer.flipX = m_characterSide;
     }
 
     private void FixedUpdate() => Movement();
     public void OnMove(InputAction.CallbackContext _context)
     {
         m_Movement = _context.ReadValue<Vector2>();
+
+        if (m_Movement.x > 0)
+            m_characterSide = false;
+        else if (m_Movement.x < 0)
+            m_characterSide = true;
     }
 
 
