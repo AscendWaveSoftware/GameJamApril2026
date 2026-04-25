@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5937057599053158581}
   - component: {fileID: 2895786494211272235}
   - component: {fileID: 2564458064757383346}
-  - component: {fileID: 6256415064446279635}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -106,24 +105,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RandomAsset
   m_meshes:
   - {fileID: -7332506622660098701, guid: fbee9e49d5f938242a821945e2fea327, type: 3}
---- !u!65 &6256415064446279635
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743854181887736947}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.152648, y: 1.0109127, z: 2.0913455}
-  m_Center: {x: -0.011602223, y: -0.00000014901165, z: 1.0456728}
