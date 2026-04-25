@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 2223358005097254551}
   - component: {fileID: 8726000409634215150}
   - component: {fileID: 3393493193459981334}
+  - component: {fileID: 7632074400173945206}
+  - component: {fileID: 4400000001122334466}
+  - component: {fileID: 6084765553822949918}
   m_Layer: 0
   m_Name: Enemy_Ranged
   m_TagString: Untagged
@@ -73,10 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d355b2d7049689d2908fbc8d9bb63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyAttackHandler
-  projectileSprite: {fileID: 0}
+  timeBetweenShots: 1
+  projectileSprite: {fileID: 21300000, guid: cb17640d5bdc56c4ca796b79d737b201, type: 3}
   projectileSpeed: 8
   projectileLifetime: 3
   projectileSpawnDistance: 0.6
+  projectileSpawnHeight: 0
   projectileRadius: 0.15
 --- !u!114 &2223358005097254551
 MonoBehaviour:
@@ -144,12 +149,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: daf51daf4dd36dd42b94421760829846, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 669e8aca5f13dd849a845bf24f5de98b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.3433334, y: 2.16}
+  m_Size: {x: 1.2314286, y: 2.7228572}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -180,3 +185,70 @@ MonoBehaviour:
   meeleSprite: {fileID: 0}
   rangedSprite: {fileID: 0}
   <CanSeePlayer>k__BackingField: 0
+--- !u!54 &7632074400173945206
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579322148024748298}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
+--- !u!114 &4400000001122334466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579322148024748298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e3c1b24f8d4e509c16f03b77d925ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleSpriteAnimator
+  spriteRenderer: {fileID: 8726000409634215150}
+  frames:
+  - {fileID: 934457581, guid: 46293b09d1e86eb4f8d0c9534d1aeba1, type: 3}
+  - {fileID: -628707897, guid: 46293b09d1e86eb4f8d0c9534d1aeba1, type: 3}
+  framesPerSecond: 4
+--- !u!136 &6084765553822949918
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579322148024748298}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}

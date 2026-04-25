@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86e2e8dacbd67b642b0501a8a5a2a775
+guid: 100ea9b760b9baa4fb3d348697dd541c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 110
+  spritePixelsToUnits: 350
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet_idle_knife_0
+      name: spritesheet_werewolf_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 431
-        height: 953
+        width: 782
+        height: 864
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 669dbf96758898a46b54b46fdf48353c
-      internalID: 1510147210
+      spriteID: 3f831588a40a1a54c9beb5a58b79dc36
+      internalID: 1736187033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_idle_knife_1
+      name: spritesheet_werewolf_1
       rect:
         serializedVersion: 2
-        x: 431
+        x: 782
         y: 0
-        width: 431
-        height: 953
+        width: 782
+        height: 864
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7ff3ab4186519b4f86d832d6e83cdbf
-      internalID: 2091647719
+      spriteID: 26f7bf766fffbf54b98dc14893fc94ce
+      internalID: 695789282
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a3c116307ae6e74449b330e83b7c3327
+    spriteID: 68e330c32280c1644962c7248c96442b
     internalID: 0
     vertices: []
     indices: 
@@ -154,10 +154,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":431.0,"y":953.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":782.0,"y":864.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      spritesheet_idle_knife_0: 1510147210
-      spritesheet_idle_knife_1: 2091647719
+      spritesheet_werewolf_0: 1736187033
+      spritesheet_werewolf_1: 695789282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

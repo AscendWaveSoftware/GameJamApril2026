@@ -67,7 +67,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!212 &4086552143351846319
 SpriteRenderer:
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: c460d749ab5b38f44941446946d59ceb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   projectileSpawnHeight: 0.8
   projectileRadius: 0.15
   projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  attackAnimationDuration: 0.12
   playerSpriteRenderer: {fileID: 4086552143351846319}
 --- !u!114 &3665080631324580796
 MonoBehaviour:
@@ -224,11 +225,35 @@ MonoBehaviour:
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5011111111111111112}
+        m_TargetAssemblyTypeName: Player.PlayerEquipmentHandler, Assembly-CSharp
+        m_MethodName: OnPrevious
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
     m_ActionName: 'Player/Previous[/Keyboard/1]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5011111111111111112}
+        m_TargetAssemblyTypeName: Player.PlayerEquipmentHandler, Assembly-CSharp
+        m_MethodName: OnNext
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
@@ -294,6 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   m_acceleration: 2.5
   m_moveSpeed: 2.5
+  m_characterSide: 0
 --- !u!136 &3879531313411489006
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -313,10 +339,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 2
+  m_Height: 10
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!114 &1601146860993998210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b472f60ae9327d84d8fac70390994ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Backpack
+  BuffStorage: {fileID: 0}
 --- !u!114 &5011111111111111112
 MonoBehaviour:
   m_ObjectHideFlags: 0
