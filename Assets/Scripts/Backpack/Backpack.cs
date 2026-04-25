@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Backpack : MonoBehaviour
 {
-    private List<IAmEquipable> m_Equipable = new List<IAmEquipable>();
+    private List<IAmEquipable> m_equipables = new List<IAmEquipable>();
     private List<Buff> m_buffs = new List<Buff>();
+
+    private Weapon m_equipedWeapon;
+
+    public Weapon EquipedWeapon => m_equipedWeapon;
 
     /// <summary>
     /// returns Item in Backpack
@@ -15,14 +19,24 @@ public class Backpack : MonoBehaviour
     /// <exception cref="IndexOutOfRangeException"></exception>
     public IAmEquipable GetEquipable(int _index)
     {
-        if (_index > m_Equipable.Count)
+        if (_index > m_equipables.Count)
             throw new IndexOutOfRangeException("_index out of range");
-        return m_Equipable[_index];
+        return m_equipables[_index];
     }
 
-    public void AddEquipable(IAmEquipable _item)
+    public void RemoveEquipable(IAmEquipable _equipable)
     {
-        m_Equipable.Add(_item);
+        m_equipables.Remove(_equipable);
+    }
+
+    public void RemoveEquipable(int _index)
+    {
+        m_equipables.RemoveAt(_index);
+    }
+
+    public void AddEquipable(IAmEquipable _equipable)
+    {
+        m_equipables.Add(_equipable);
     }
 
 
@@ -34,9 +48,26 @@ public class Backpack : MonoBehaviour
     /// <exception cref="IndexOutOfRangeException"></exception>
     public Buff GetBuff(int _index)
     {
-        if (_index > m_Equipable.Count)
+        if (_index > m_equipables.Count)
             throw new IndexOutOfRangeException("_index out of range");
         return m_buffs[_index];
+    }
+
+    public IAmEquipable[] GetWeapons()
+    {
+        var weapons = m_equipables.FindAll((IAmEquipable q) => q is Weapon);
+
+        return weapons.ToArray();
+    }
+
+    public void EquipWeapon(Weapon _weapon)
+    {
+        m_equipedWeapon = _weapon;
+    }
+
+    public void UnEquipWeapon()
+    {
+        m_equipedWeapon = null;
     }
 
 }
