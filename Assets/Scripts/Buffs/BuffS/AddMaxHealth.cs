@@ -1,32 +1,21 @@
 using Player;
-using UnityEngine;
 
 public class AddMaxHealth : Buff
 {
-    private BuffStorage m_bs;
-
     private PlayerHealth m_playerHeath;
     private float m_maxHealth;
     private int m_maxHealthAddition;
 
     private int[] additionRange = { 1, 5 };
 
-    public AddMaxHealth()
+    public AddMaxHealth(PlayerHealth _player)
     {
         m_name = "Menschen Blut";
-        m_maxHealthAddition = CalcAddition();
+        m_maxHealthAddition = CalcAddition(additionRange);
         m_price = CalcPrice();
         m_description = "Fügt dem Spieler " + m_maxHealthAddition + "HP hinzu.";
+        m_playerHeath = _player;
         m_maxHealth = m_playerHeath.MaxHealth;
-    }
-
-    private int CalcAddition()
-    {
-        int addition = 0;
-
-        addition = Random.Range(additionRange[0], additionRange[1]);
-
-        return addition;
     }
 
     private int CalcPrice()
