@@ -25,6 +25,10 @@ public class TimeProfile : ScriptableObject
     [Tooltip("Echte Sekunden pro In-Game-Minute.")]
     [Min(0.01f)] public float RealSecondsPerGameMinute = 1f;
 
+    [Header("Start Time")]
+    [Range(0, 23)] public int StartHour = 12;
+    [Range(0, 59)] public int StartMinute = 0;
+
     [Header("Phase Switch (Stunden)")]
     public int SunriseHour = 6;
     public int DayHour = 8;

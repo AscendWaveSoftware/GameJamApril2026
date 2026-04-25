@@ -137,6 +137,8 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   RealSecondsPerGameMinute: 0.1
+  StartHour: 4
+  StartMinute: 0
   SunriseHour: 6
   DayHour: 8
   SunsetHour: 18

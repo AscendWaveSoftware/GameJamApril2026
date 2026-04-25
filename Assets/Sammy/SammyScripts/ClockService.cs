@@ -14,6 +14,7 @@ public sealed class ClockService : ITimeSource
     public event Action DayChanged;
 
     private float acc;
+    private float time01;
 
     public void Tick(float _dt, float _realSecondsPerGameMinute)
     {
