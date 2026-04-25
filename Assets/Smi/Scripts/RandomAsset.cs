@@ -1,16 +1,15 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshRenderer))]
 public class RandomAsset : MonoBehaviour
 {
-    [SerializeField] Mesh[] m_meshes;
-    private MeshFilter m_meshFilter;
+    [SerializeField] GameObject[] m_objects;
+
 
     void Start()
     {
-        m_meshFilter = GetComponent<MeshFilter>();
-        if(m_meshes != null)
-        m_meshFilter.mesh = m_meshes[Random.Range(0, m_meshes.Length)];
+        if (m_objects != null)
+        {
+            Instantiate(m_objects[Random.Range(0, m_objects.Length)],this.transform);
+        }
     }
 }
