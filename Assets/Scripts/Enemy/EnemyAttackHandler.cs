@@ -13,7 +13,7 @@ namespace Enemy
         [SerializeField] private float projectileSpeed = 8f;
         [SerializeField] private float projectileLifetime = 3f;
         [SerializeField] private float projectileSpawnDistance = 0.6f;
-        [SerializeField] private float projectileSpawnHeight = 0f;
+        [SerializeField] private float projectileSpawnHeight = 0.8f;
         [SerializeField] private float projectileRadius = 0.15f;
 
         private EnemyBase _enemyBase;

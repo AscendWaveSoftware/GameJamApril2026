@@ -5,6 +5,7 @@ namespace Player
 {
 [RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerEquipmentHandler))]
 public class PlayerAttackHandler : MonoBehaviour
 {
     [Header("Attack")]
@@ -14,9 +15,14 @@ public class PlayerAttackHandler : MonoBehaviour
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private float projectileLifetime = 2f;
     [SerializeField] private float projectileSpawnOffset = 0.6f;
-    [SerializeField] private float projectileSpawnHeight = 0f;
+    [SerializeField] private float projectileSpawnHeight = 0.8f;
     [SerializeField] private float projectileRadius = 0.15f;
     [SerializeField] private Sprite projectileSprite;
+
+    [Header("Melee")]
+    [SerializeField] private float meleeRange = 1f;
+    [SerializeField] private float meleeRadius = 0.6f;
+    [SerializeField] private float meleeHeightOffset = 0.6f;
 
     [Header("Animation")]
     [SerializeField] private float attackAnimationDuration = 0.12f;
@@ -24,7 +30,9 @@ public class PlayerAttackHandler : MonoBehaviour
     [Header("Facing")]
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
-    private float _nextShootTime;
+    [SerializeField] private PlayerEquipmentHandler equipmentHandler;
+
+    private float _nextAttackTime;
     private float _lastAttackTime = -999f;
 
     public bool IsAttacking => Time.time <= _lastAttackTime + attackAnimationDuration;
@@ -42,6 +50,11 @@ public class PlayerAttackHandler : MonoBehaviour
             playerSpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        if (equipmentHandler == null)
+        {
+            equipmentHandler = GetComponent<PlayerEquipmentHandler>();
+        }
+
         if (projectileSprite == null)
         {
             Debug.LogWarning("PlayerAttackHandler: projectileSprite is not set. Assign a sprite to fire projectiles.", this);
@@ -51,10 +64,10 @@ public class PlayerAttackHandler : MonoBehaviour
     private void Update()
     {
         UpdateFacing();
-        
-        if (Keyboard.current != null && Keyboard.current.spaceKey.isPressed)
+
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            TryShoot();
+            TryAttack(true);
         }
     }
 
@@ -62,7 +75,7 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         if (context.performed)
         {
-            TryShoot();
+            TryAttack(false);
         }
     }
 
@@ -85,22 +98,64 @@ public class PlayerAttackHandler : MonoBehaviour
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
         float screenMidX = Screen.width / 2f;
-        
+
         bool shouldFlipX = mousePos.x < screenMidX;
         playerSpriteRenderer.flipX = shouldFlipX;
     }
 
-    private void TryShoot()
+    private void TryAttack(bool fromSpacebar)
     {
-        if (Time.time < _nextShootTime)
+        Weapon equippedWeapon = equipmentHandler != null ? equipmentHandler.GetEquippedWeapon() : null;
+        if (equippedWeapon == null)
         {
             return;
         }
 
-        Shoot();
+        if (Time.time < _nextAttackTime)
+        {
+            return;
+        }
 
+        if (equippedWeapon is Knife)
+        {
+            if (!fromSpacebar)
+            {
+                return;
+            }
+
+            DoMeleeAttack();
+            ApplyAttackCooldown();
+            return;
+        }
+
+        if (equippedWeapon is Rifle)
+        {
+            Shoot();
+            ApplyAttackCooldown();
+        }
+    }
+
+    private void ApplyAttackCooldown()
+    {
         float effectiveFireRate = Mathf.Max(0.01f, fireRate * fireRateMultiplikator);
-        _nextShootTime = Time.time + (1f / effectiveFireRate);
+        _nextAttackTime = Time.time + (1f / effectiveFireRate);
+        _lastAttackTime = Time.time;
+    }
+
+    private void DoMeleeAttack()
+    {
+        Vector3 direction = GetShootDirection();
+        Vector3 center = transform.position + direction * Mathf.Max(0f, meleeRange) + Vector3.up * meleeHeightOffset;
+
+        Collider[] hits = Physics.OverlapSphere(center, Mathf.Max(0.01f, meleeRadius));
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Enemy.EnemyBase enemy = hits[i].GetComponentInParent<Enemy.EnemyBase>();
+            if (enemy != null)
+            {
+                enemy.DamageEnemy(damage);
+            }
+        }
     }
 
     private void Shoot()
@@ -124,10 +179,7 @@ public class PlayerAttackHandler : MonoBehaviour
             projectileRadius,
             BulletOwner.Player,
             transform.root);
-
-        _lastAttackTime = Time.time;
     }
-
 
     private Vector3 GetShootDirection()
     {
@@ -139,16 +191,16 @@ public class PlayerAttackHandler : MonoBehaviour
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
-        
+
         float playerY = transform.position.y;
         float t = (playerY - ray.origin.y) / ray.direction.y;
-        
+
         if (t > 0f)
         {
             Vector3 targetPoint = ray.origin + ray.direction * t;
             Vector3 direction = targetPoint - transform.position;
             direction.y = 0f;
-            
+
             if (direction.sqrMagnitude > 0.0001f)
             {
                 return direction.normalized;
@@ -159,4 +211,3 @@ public class PlayerAttackHandler : MonoBehaviour
     }
 }
 }
-

@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool m_characterSide;
     private SpriteRenderer m_spriteRenderer;
     private Vector2 m_Movement;
+    private Player.PlayerEquipmentHandler m_equipmentHandler;
 
     public bool IsMoving => m_Movement.sqrMagnitude > 0.01f;
 
@@ -25,6 +26,17 @@ public class PlayerMovement : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (GetComponent<Backpack>() == null)
+        {
+            gameObject.AddComponent<Backpack>();
+        }
+
+        m_equipmentHandler = GetComponent<Player.PlayerEquipmentHandler>();
+        if (m_equipmentHandler == null)
+        {
+            m_equipmentHandler = gameObject.AddComponent<Player.PlayerEquipmentHandler>();
+        }
 
         m_rb.useGravity = false;
         m_rb.constraints = RigidbodyConstraints.FreezeRotationX |

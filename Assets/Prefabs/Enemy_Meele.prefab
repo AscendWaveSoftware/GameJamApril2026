@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8205251610487045787}
   - component: {fileID: 1859636032615449540}
   - component: {fileID: 3203897768094877479}
+  - component: {fileID: 4400000001122334455}
   - component: {fileID: 3232586472410942529}
   m_Layer: 0
   m_Name: Enemy_Meele
@@ -209,8 +210,25 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &4400000001122334455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192067226504019662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e3c1b24f8d4e509c16f03b77d925ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleSpriteAnimator
+  spriteRenderer: {fileID: 8205251610487045787}
+  frames:
+  - {fileID: 1736187033, guid: 100ea9b760b9baa4fb3d348697dd541c, type: 3}
+  - {fileID: 695789282, guid: 100ea9b760b9baa4fb3d348697dd541c, type: 3}
+  framesPerSecond: 4
 --- !u!136 &3232586472410942529
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -231,6 +249,6 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}

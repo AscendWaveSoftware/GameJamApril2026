@@ -12,24 +12,13 @@ namespace Player
 
         private void Awake()
         {
-            if (playerHealth == null)
-            {
-                playerHealth = FindFirstObjectByType<PlayerHealth>();
-            }
-
-            if (playerGold == null)
-            {
-                playerGold = FindFirstObjectByType<PlayerGold>();
-            }
-
-            if (equipmentHandler == null)
-            {
-                equipmentHandler = FindFirstObjectByType<PlayerEquipmentHandler>();
-            }
+            ResolveReferences();
         }
 
         private void OnGUI()
         {
+            ResolveReferences();
+
             if (playerHealth == null)
             {
                 return;
@@ -63,6 +52,23 @@ namespace Player
                     $"Weapon: {weaponName}");
             }
         }
+
+        private void ResolveReferences()
+        {
+            if (playerHealth == null)
+            {
+                playerHealth = FindFirstObjectByType<PlayerHealth>();
+            }
+
+            if (playerGold == null)
+            {
+                playerGold = FindFirstObjectByType<PlayerGold>();
+            }
+
+            if (equipmentHandler == null)
+            {
+                equipmentHandler = FindFirstObjectByType<PlayerEquipmentHandler>();
+            }
+        }
     }
 }
-
