@@ -24,9 +24,12 @@ public class EnvironmentDirector : MonoBehaviour
     private void Awake()
     {
         clock = new ClockService();
+        clock.SetTime(profile.StartHour, profile.StartMinute);
         phase = new PhaseService(profile.SunriseHour, profile.DayHour, profile.SunsetHour, profile.NightHour);
         sky = new SkyboxBlender(skyboxMat);
         lightDir = new LightDirector(sun);
+        if (sun)
+            RenderSettings.sun = sun;
         post = new PostDirector(postVolume);
 
         _onHourChanged = OnHourChanged;
@@ -45,7 +48,7 @@ public class EnvironmentDirector : MonoBehaviour
 
         clock.Tick(Time.deltaTime, profile.RealSecondsPerGameMinute);
 
-        sun.transform.rotation = SunRotation.FromTime01(clock.TimeOfDay01, Vector3.right);
+        sun.transform.rotation = SunRotation.FromTime01(clock.TimeOfDay01);
 
         transition.Tick(Time.deltaTime);
 
