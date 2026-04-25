@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class BuffStorage : MonoBehaviour
+public class BuffStorage
 {
     private List<Buff> m_buffs = new List<Buff>();
 
@@ -39,6 +40,22 @@ public class BuffStorage : MonoBehaviour
         return false;
     }
 
+    public bool TypeIsInList(Buff _buff)
+    {
+        bool foundBuff = false;
+        foreach (Buff buff in m_buffs)
+        {
+            try
+            {
+                _buff = (AuraBuff)buff;
+                foundBuff = true;
+            }
+            catch (Exception){}
+        }
+
+        return foundBuff;
+    }
+
     /// <summary>
     /// returns Buff in Backpack
     /// </summary>
@@ -49,5 +66,10 @@ public class BuffStorage : MonoBehaviour
         if (_index < m_buffs.Count)
             throw new IndexOutOfRangeException("_index out of range");
         return m_buffs[_index];
+    }
+
+    public T GetBuffByType<T>() where T : Buff
+    {
+        return (T)m_buffs.Find((Buff b) => b is T);
     }
 }

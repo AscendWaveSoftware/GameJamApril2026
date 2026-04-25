@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backpack : MonoBehaviour
+public class Backpack
 {
     private List<IAmEquipable> m_equipables = new List<IAmEquipable>();
 
