@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Player.PlayerGold))]
+[RequireComponent(typeof(Player.PlayerEquipmentHandler))]
 
 public class PlayerMovement : MonoBehaviour
 {
