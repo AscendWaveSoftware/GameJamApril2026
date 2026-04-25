@@ -5,7 +5,6 @@ using UnityEngine;
 public class Backpack : MonoBehaviour
 {
     private List<IAmEquipable> m_equipables = new List<IAmEquipable>();
-    private List<Buff> m_buffs = new List<Buff>();
 
     private Weapon m_equipedWeapon;
     private Armor m_equipedArmor;
@@ -54,19 +53,6 @@ public class Backpack : MonoBehaviour
     public void AddEquipable(IAmEquipable _equipable)
     {
         m_equipables.Add(_equipable);
-    }
-
-    /// <summary>
-    /// returns Buff in Backpack
-    /// </summary>
-    /// <param name="_index">index of Buff</param>
-    /// <returns></returns>
-    /// <exception cref="IndexOutOfRangeException"></exception>
-    public Buff GetBuff(int _index)
-    {
-        if (_index < m_equipables.Count)
-            throw new IndexOutOfRangeException("_index out of range");
-        return m_buffs[_index];
     }
 
     /// <summary>
