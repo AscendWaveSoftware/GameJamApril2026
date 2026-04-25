@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7018550827929816581}
   - component: {fileID: 8205251610487045787}
   - component: {fileID: 1859636032615449540}
+  - component: {fileID: 3203897768094877479}
+  - component: {fileID: 3232586472410942529}
   m_Layer: 0
   m_Name: Enemy_Meele
   m_TagString: Untagged
@@ -73,10 +75,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d355b2d7049689d2908fbc8d9bb63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyAttackHandler
+  timeBetweenShots: 1
   projectileSprite: {fileID: 0}
   projectileSpeed: 8
   projectileLifetime: 3
   projectileSpawnDistance: 0.6
+  projectileSpawnHeight: 0
   projectileRadius: 0.15
 --- !u!114 &7018550827929816581
 MonoBehaviour:
@@ -144,12 +148,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 323e9cf76336373469b3fcdfe6ce9348, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e71e2508c36c92242877db3eccc663fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.3433334, y: 2.16}
+  m_Size: {x: 2.5028572, y: 2.7657142}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -169,7 +173,7 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   <Mass>k__BackingField: 1
   <MovementSpeed>k__BackingField: 1
-  <VisionRange>k__BackingField: 10
+  <VisionRange>k__BackingField: 100
   <PreferredDistanceToPlayer>k__BackingField: 0
   <DistanceTolerance>k__BackingField: 0.5
   <MaxHealth>k__BackingField: 10
@@ -180,3 +184,53 @@ MonoBehaviour:
   meeleSprite: {fileID: 0}
   rangedSprite: {fileID: 0}
   <CanSeePlayer>k__BackingField: 0
+--- !u!54 &3203897768094877479
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192067226504019662}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 4
+  m_CollisionDetection: 0
+--- !u!136 &3232586472410942529
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192067226504019662}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Player.PlayerGold))]
+[RequireComponent(typeof(Player.PlayerEquipmentHandler))]
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool m_characterSide;
     private SpriteRenderer m_spriteRenderer;
     private Vector2 m_Movement;
+
+    public bool IsMoving => m_Movement.sqrMagnitude > 0.01f;
 
     void Start()
     {
