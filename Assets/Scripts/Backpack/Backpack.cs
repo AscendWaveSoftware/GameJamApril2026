@@ -6,6 +6,8 @@ public class Backpack : MonoBehaviour
 {
     private List<IAmEquipable> m_equipables = new List<IAmEquipable>();
 
+    public BuffStorage BuffStorage = new BuffStorage();
+
     private Weapon m_equipedWeapon;
     private Armor m_equipedArmor;
 
