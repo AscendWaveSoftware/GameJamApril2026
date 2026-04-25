@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Player.PlayerGold))]
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -28,16 +30,10 @@ public class PlayerMovement : MonoBehaviour
                             RigidbodyConstraints.FreezePositionY;
     }
 
-    private void Update() => m_spriteRenderer.flipX = m_characterSide;
     private void FixedUpdate() => Movement();
     public void OnMove(InputAction.CallbackContext _context)
     {
         m_Movement = _context.ReadValue<Vector2>();
-
-        if (m_Movement.x > 0)
-            m_characterSide = false;
-        else if (m_Movement.x < 0)
-            m_characterSide = true;
     }
 
 
