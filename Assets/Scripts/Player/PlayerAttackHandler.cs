@@ -23,6 +23,12 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private float _nextShootTime;
 
+    public float Damage
+    {
+        get => damage;
+        set => damage = Mathf.Max(0f, value);
+    }
+
     private void Awake()
     {
         if (playerSpriteRenderer == null)
@@ -61,7 +67,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void ChangePlayerDamage(float value)
     {
-        damage = Mathf.Max(0f, value);
+        Damage = value;
     }
 
     private void UpdateFacing()
