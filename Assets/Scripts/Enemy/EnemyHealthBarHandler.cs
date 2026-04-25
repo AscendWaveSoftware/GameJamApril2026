@@ -15,14 +15,14 @@ namespace Enemy
         private Transform _barRoot;
         private SpriteRenderer _backgroundRenderer;
         private SpriteRenderer _fillRenderer;
-        private Camera _mainCamera;
+        private UnityEngine.Camera _mainCamera;
 
         private static Sprite _barSprite;
 
         private void Awake()
         {
             _enemyBase = GetComponent<EnemyBase>();
-            _mainCamera = Camera.main;
+            _mainCamera = UnityEngine.Camera.main;
 
             CreateBarObjects();
             UpdateBar();
@@ -51,7 +51,7 @@ namespace Enemy
 
             if (_mainCamera == null)
             {
-                _mainCamera = Camera.main;
+                _mainCamera = UnityEngine.Camera.main;
             }
 
             if (_mainCamera != null)

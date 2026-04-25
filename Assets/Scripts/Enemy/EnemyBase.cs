@@ -14,10 +14,12 @@ namespace Enemy
     [RequireComponent(typeof(EnemyAttackHandler))]
     [RequireComponent(typeof(EnemyHealthBarHandler))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CapsuleCollider))]
     public class EnemyBase : MonoBehaviour
     {
         private Rigidbody _rigidbody;
-        private BoxCollider _boxCollider;
+        private CapsuleCollider _capsuleCollider;
         private SpriteRenderer _spriteRenderer;
 
         public Transform PlayerTransform { get; private set; }
@@ -74,17 +76,9 @@ namespace Enemy
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            if (_rigidbody == null)
-            {
-                _rigidbody = gameObject.AddComponent<Rigidbody>();
-            }
-
             _rigidbody.mass = Mass;
-            _boxCollider = GetComponent<BoxCollider>();
-            if (_boxCollider == null)
-            {
-                _boxCollider = gameObject.AddComponent<BoxCollider>();
-            }
+
+            _capsuleCollider = GetComponent<CapsuleCollider>();
         }
 
         // APIs
