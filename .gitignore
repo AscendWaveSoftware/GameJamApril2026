@@ -12,6 +12,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/Assets/Scenes/Yu/
+/Assets/Scenes/Yu.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -75,3 +77,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
+
+# Rider/Intellij Related
+.idea/
