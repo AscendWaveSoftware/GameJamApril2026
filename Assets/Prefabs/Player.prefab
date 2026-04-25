@@ -138,9 +138,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerAttackHandler
   damage: 1
+  fireRate: 4
+  fireRateMultiplikator: 1
   projectileSpeed: 10
   projectileLifetime: 2
   projectileSpawnOffset: 0.6
+  projectileSpawnHeight: 0.8
   projectileRadius: 0.15
   projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   playerSpriteRenderer: {fileID: 4086552143351846319}
