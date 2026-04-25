@@ -10,11 +10,11 @@ namespace Player
         private void Awake()
         {
             backpack = GetComponent<Backpack>();
-            var weapon = new AN94(0.1f, 1f);
+
+            var knife = new Rifle(2.2f, 2.0f);
             
-            //TODO For testing
-            backpack.AddEquipable(weapon);
-            backpack.EquipWeapon(weapon);
+            backpack.AddEquipable(knife);
+            backpack.EquipWeapon(knife);
         }
 
         public Weapon GetEquippedWeapon()
@@ -32,4 +32,3 @@ namespace Player
         }
     }
 }
-

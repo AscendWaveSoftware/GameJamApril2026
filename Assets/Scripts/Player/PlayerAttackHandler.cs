@@ -18,10 +18,16 @@ public class PlayerAttackHandler : MonoBehaviour
     [SerializeField] private float projectileRadius = 0.15f;
     [SerializeField] private Sprite projectileSprite;
 
+    [Header("Animation")]
+    [SerializeField] private float attackAnimationDuration = 0.12f;
+
     [Header("Facing")]
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
     private float _nextShootTime;
+    private float _lastAttackTime = -999f;
+
+    public bool IsAttacking => Time.time <= _lastAttackTime + attackAnimationDuration;
 
     public float Damage
     {
@@ -118,6 +124,8 @@ public class PlayerAttackHandler : MonoBehaviour
             projectileRadius,
             BulletOwner.Player,
             transform.root);
+
+        _lastAttackTime = Time.time;
     }
 
 
@@ -151,7 +159,4 @@ public class PlayerAttackHandler : MonoBehaviour
     }
 }
 }
-
-
-
 

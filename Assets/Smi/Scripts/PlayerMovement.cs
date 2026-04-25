@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer m_spriteRenderer;
     private Vector2 m_Movement;
 
+    public bool IsMoving => m_Movement.sqrMagnitude > 0.01f;
+
     void Start()
     {
         m_rb = GetComponent<Rigidbody>();

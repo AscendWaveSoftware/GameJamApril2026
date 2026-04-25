@@ -16,6 +16,9 @@ GameObject:
   - component: {fileID: 7328515070723643604}
   - component: {fileID: 3879531313411489006}
   - component: {fileID: 1601146860993998210}
+  - component: {fileID: 5011111111111111111}
+  - component: {fileID: 5011111111111111112}
+  - component: {fileID: 5011111111111111113}
   - component: {fileID: 852613767692641615}
   m_Layer: 0
   m_Name: Player
@@ -193,7 +196,19 @@ MonoBehaviour:
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -7853757589523114716}
+        m_TargetAssemblyTypeName: Player.PlayerAttackHandler, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
@@ -316,6 +331,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
   maxHealth: 10
   currentHealth: 10
+--- !u!114 &5011111111111111111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428734882445426956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b472f60ae9327d84d8fac70390994ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Backpack
+--- !u!114 &5011111111111111112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428734882445426956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0248761cbd334b449820914a29210cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerEquipmentHandler
+--- !u!114 &5011111111111111113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428734882445426956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f499d4fc76d44381bd670b067c498472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerSpriteAnimationHandler
+  spriteRenderer: {fileID: 4086552143351846319}
+  equipmentHandler: {fileID: 5011111111111111112}
+  movement: {fileID: 7328515070723643604}
+  attackHandler: {fileID: -7853757589523114716}
+  framesPerSecond: 8
+  idleFrames:
+  - {fileID: 51837135, guid: 1ff2cc48d8379b0428f942f0e74431b8, type: 3}
+  - {fileID: -1112084050, guid: 1ff2cc48d8379b0428f942f0e74431b8, type: 3}
+  neutralMoveFrames:
+  - {fileID: -1285948497, guid: 65aca6fa5b70b0c4ba9fceca688bb7f3, type: 3}
+  - {fileID: 672127851, guid: 65aca6fa5b70b0c4ba9fceca688bb7f3, type: 3}
+  - {fileID: -1771825045, guid: 65aca6fa5b70b0c4ba9fceca688bb7f3, type: 3}
+  - {fileID: -1321910637, guid: 65aca6fa5b70b0c4ba9fceca688bb7f3, type: 3}
+  idleKnifeFrames:
+  - {fileID: 1510147210, guid: 86e2e8dacbd67b642b0501a8a5a2a775, type: 3}
+  - {fileID: 2091647719, guid: 86e2e8dacbd67b642b0501a8a5a2a775, type: 3}
+  meleeHoldFrames:
+  - {fileID: 2116902406, guid: 0b932a118aaf8ae4886d506b0acf34b7, type: 3}
+  - {fileID: -1160228371, guid: 0b932a118aaf8ae4886d506b0acf34b7, type: 3}
+  - {fileID: 146203221, guid: 0b932a118aaf8ae4886d506b0acf34b7, type: 3}
+  - {fileID: 1989573917, guid: 0b932a118aaf8ae4886d506b0acf34b7, type: 3}
+  meleeAimFrames:
+  - {fileID: -2055265253, guid: e02ba569a7f3cb24db4d0f29d1404d56, type: 3}
+  - {fileID: -905428503, guid: e02ba569a7f3cb24db4d0f29d1404d56, type: 3}
+  - {fileID: -1882616036, guid: e02ba569a7f3cb24db4d0f29d1404d56, type: 3}
+  - {fileID: 1458322062, guid: e02ba569a7f3cb24db4d0f29d1404d56, type: 3}
+  idleRifleFrames:
+  - {fileID: 1471951515, guid: 3fd21bf259cda7249892a81cbbff821f, type: 3}
+  - {fileID: 13323481, guid: 3fd21bf259cda7249892a81cbbff821f, type: 3}
+  rangeHoldFrames:
+  - {fileID: -1967713104, guid: 68fbcf38ffa8b6e48b3e7f3ffe549d5b, type: 3}
+  - {fileID: 842421127, guid: 68fbcf38ffa8b6e48b3e7f3ffe549d5b, type: 3}
+  - {fileID: 705566972, guid: 68fbcf38ffa8b6e48b3e7f3ffe549d5b, type: 3}
+  - {fileID: 996807752, guid: 68fbcf38ffa8b6e48b3e7f3ffe549d5b, type: 3}
+  rangeAimFrames:
+  - {fileID: 318508113, guid: 0f5f6729ac67cef4bb4a7f991dd23327, type: 3}
+  - {fileID: -1950450267, guid: 0f5f6729ac67cef4bb4a7f991dd23327, type: 3}
+  - {fileID: 1377136335, guid: 0f5f6729ac67cef4bb4a7f991dd23327, type: 3}
+  - {fileID: -1981576781, guid: 0f5f6729ac67cef4bb4a7f991dd23327, type: 3}
 --- !u!114 &852613767692641615
 MonoBehaviour:
   m_ObjectHideFlags: 0
