@@ -5,11 +5,16 @@ namespace Enemy
     [RequireComponent(typeof(EnemyBase))]
     public class EnemyAttackHandler : MonoBehaviour
     {
+        [Header("Attack Timing")]
+        [SerializeField] private float timeBetweenShots = 1f;
+
         [Header("Ranged Projectile")]
         [SerializeField] private Sprite projectileSprite;
         [SerializeField] private float projectileSpeed = 8f;
         [SerializeField] private float projectileLifetime = 3f;
         [SerializeField] private float projectileSpawnDistance = 0.6f;
+        [SerializeField] private float projectileSpawnHeight = 0f;
+        [SerializeField] private float projectileRadius = 0.15f;
 
         private EnemyBase _enemyBase;
         private float _nextAttackTime;
@@ -38,7 +43,7 @@ namespace Enemy
             }
 
             PerformAttack(playerTransform);
-            _nextAttackTime = Time.time + _enemyBase.TimeBetweenAttacks;
+            _nextAttackTime = Time.time + Mathf.Max(0.05f, timeBetweenShots);
         }
 
         private bool IsPlayerInAttackRange(Transform playerTransform)
@@ -76,15 +81,18 @@ namespace Enemy
 
             direction.Normalize();
 
-            GameObject projectileObject = new GameObject("EnemyProjectile");
-            projectileObject.transform.position = transform.position + direction * projectileSpawnDistance;
-            projectileObject.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-
-            SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = projectileSprite;
-
-            global::Enemy.EnemyProjectile projectile = projectileObject.AddComponent<global::Enemy.EnemyProjectile>();
-            projectile.Initialize(direction, projectileSpeed, projectileLifetime);
+            Vector3 spawnPosition = transform.position + direction * projectileSpawnDistance + Vector3.up * projectileSpawnHeight;
+            global::BulletProjectile.Spawn(
+                "EnemyBullet",
+                spawnPosition,
+                direction,
+                projectileSprite,
+                projectileSpeed,
+                projectileLifetime,
+                _enemyBase.AttackDamage,
+                projectileRadius,
+                global::BulletOwner.Enemy,
+                transform.root);
         }
     }
 }
