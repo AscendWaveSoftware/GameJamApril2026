@@ -18,6 +18,10 @@ public class AddMaxHealth : Buff
         m_maxHealth = m_playerHeath.MaxHealth;
     }
 
+    public AddMaxHealth()
+    {
+    }
+
     private int CalcPrice()
     {
         int price = 5;
