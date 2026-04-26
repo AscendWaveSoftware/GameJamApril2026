@@ -2675,6 +2675,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 956854954788895422, guid: 1d9a896c41697164389769eb51dc4818, type: 3}
   m_PrefabInstance: {fileID: 226040046}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &235411596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011111111111111112, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
+  m_PrefabInstance: {fileID: 1505781656}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0248761cbd334b449820914a29210cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerEquipmentHandler
 --- !u!4 &235411604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4641223988537614524, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
@@ -15981,6 +15992,18 @@ PrefabInstance:
     - target: {fileID: -7853757589523114716, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
       propertyPath: projectileSpeed
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -7853757589523114716, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
+      propertyPath: equipmentHandler
+      value: 
+      objectReference: {fileID: 235411596}
+    - target: {fileID: -7853757589523114716, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
+      propertyPath: rifleSmokeEffectPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7853757589523114716, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
+      propertyPath: knifeSwooshEffectPrefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1601146860993998210, guid: acf9403bddc5b02438ab5c8d86e6bcae, type: 3}
       propertyPath: maxHealth

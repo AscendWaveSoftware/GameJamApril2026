@@ -29,6 +29,12 @@ namespace Player
 
         [SerializeField] private PlayerEquipmentHandler equipmentHandler;
 
+        [Header("Attack VFX")]
+        [SerializeField] private ParticleSystem knifeSwooshEffectPrefab;
+        [SerializeField] private ParticleSystem rifleSmokeEffectPrefab;
+        [SerializeField] private float generatedVfxLifetime = 1f;
+        [SerializeField] private float rifleSmokeFollowSpeed = 0.22f;
+
         private float _nextAttackTime;
         private float _lastAttackTime = -999f;
 
@@ -162,6 +168,8 @@ namespace Player
                     enemy.DamageEnemy(damage);
                 }
             }
+
+            PlayKnifeSwooshVfx(direction);
         }
 
         private void Shoot()
@@ -186,6 +194,186 @@ namespace Player
                 projectileRadius,
                 BulletOwner.Player,
                 transform.root);
+
+            PlayRifleSmokeVfx(spawnPosition, direction);
+        }
+
+        private void PlayKnifeSwooshVfx(Vector3 direction)
+        {
+            Vector3 safeDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : transform.forward;
+            Vector3 vfxPosition = transform.position + safeDirection * Mathf.Max(0.2f, meleeRange * 0.7f) + Vector3.up * meleeHeightOffset;
+            Quaternion vfxRotation = Quaternion.LookRotation(safeDirection, Vector3.up);
+
+            if (knifeSwooshEffectPrefab != null)
+            {
+                SpawnParticleFromPrefab(knifeSwooshEffectPrefab, vfxPosition, vfxRotation);
+                return;
+            }
+
+            SpawnGeneratedKnifeSwoosh(vfxPosition, vfxRotation);
+        }
+
+        private void PlayRifleSmokeVfx(Vector3 spawnPosition, Vector3 direction)
+        {
+            Vector3 safeDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : transform.forward;
+            Quaternion vfxRotation = Quaternion.LookRotation(safeDirection, Vector3.up);
+
+            if (rifleSmokeEffectPrefab != null)
+            {
+                ParticleSystem instance = Instantiate(rifleSmokeEffectPrefab, spawnPosition, vfxRotation);
+                if (instance != null)
+                {
+                    instance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    ApplyRifleSmokeFollow(instance, safeDirection);
+                    instance.Play(true);
+                    Destroy(instance.gameObject, Mathf.Max(0.25f, GetParticleLifetime(instance)));
+                }
+                return;
+            }
+
+            SpawnGeneratedRifleSmoke(spawnPosition, vfxRotation, safeDirection);
+        }
+
+        private void SpawnParticleFromPrefab(ParticleSystem prefab, Vector3 position, Quaternion rotation)
+        {
+            ParticleSystem instance = Instantiate(prefab, position, rotation);
+            if (instance == null)
+            {
+                return;
+            }
+
+            instance.Play(true);
+            Destroy(instance.gameObject, Mathf.Max(0.25f, GetParticleLifetime(instance)));
+        }
+
+        private void SpawnGeneratedKnifeSwoosh(Vector3 position, Quaternion rotation)
+        {
+            GameObject go = new GameObject("KnifeSwooshVFX");
+            go.transform.position = position;
+            go.transform.rotation = rotation;
+
+            ParticleSystem ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.playOnAwake = false;
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            main.loop = false;
+            main.duration = 0.16f;
+            main.startLifetime = 0.22f;
+            main.startSpeed = 4.8f;
+            main.startSize = 0.24f;
+            main.startColor = new Color(1f, 1f, 1f, 0.9f);
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 24) });
+
+            var shape = ps.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 36f;
+            shape.radius = 0.12f;
+
+            var colorOverLifetime = ps.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new[]
+                {
+                    new GradientColorKey(new Color(1f, 1f, 1f), 0f),
+                    new GradientColorKey(new Color(1f, 1f, 1f), 1f)
+                },
+                new[]
+                {
+                    new GradientAlphaKey(0.9f, 0f),
+                    new GradientAlphaKey(0f, 1f)
+                });
+            colorOverLifetime.color = gradient;
+
+            ps.Play(true);
+            Destroy(go, Mathf.Max(0.25f, generatedVfxLifetime));
+        }
+
+        private void SpawnGeneratedRifleSmoke(Vector3 position, Quaternion rotation, Vector3 direction)
+        {
+            GameObject go = new GameObject("RifleSmokeVFX");
+            go.transform.position = position;
+            go.transform.rotation = rotation;
+
+            ParticleSystem ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.playOnAwake = false;
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            main.loop = false;
+            main.duration = 0.35f;
+            main.startLifetime = 0.45f;
+            main.startSpeed = 0.8f;
+            main.startSize = 0.16f;
+            main.startColor = new Color(0.28f, 0.28f, 0.28f, 0.72f);
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 8) });
+
+            var shape = ps.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 10f;
+            shape.radius = 0.03f;
+
+            var sizeOverLifetime = ps.sizeOverLifetime;
+            sizeOverLifetime.enabled = true;
+            sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.EaseInOut(0f, 0.6f, 1f, 1.6f));
+
+            ApplyRifleSmokeFollow(ps, direction);
+
+            ps.Play(true);
+            Destroy(go, Mathf.Max(0.25f, generatedVfxLifetime));
+        }
+
+        private void ApplyRifleSmokeFollow(ParticleSystem ps, Vector3 direction)
+        {
+            if (ps == null)
+            {
+                return;
+            }
+
+            float followSpeed = Mathf.Max(0f, rifleSmokeFollowSpeed);
+            if (followSpeed <= 0f)
+            {
+                return;
+            }
+
+            Vector3 safeDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : transform.forward;
+
+            var velocityOverLifetime = ps.velocityOverLifetime;
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.space = ParticleSystemSimulationSpace.World;
+            velocityOverLifetime.x = new ParticleSystem.MinMaxCurve(safeDirection.x * followSpeed);
+            velocityOverLifetime.y = new ParticleSystem.MinMaxCurve(safeDirection.y * followSpeed);
+            velocityOverLifetime.z = new ParticleSystem.MinMaxCurve(safeDirection.z * followSpeed);
+        }
+
+        private float GetParticleLifetime(ParticleSystem ps)
+        {
+            var main = ps.main;
+            float lifetime = main.duration;
+
+            if (main.startLifetime.mode == ParticleSystemCurveMode.Constant)
+            {
+                lifetime += main.startLifetime.constant;
+            }
+            else if (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants)
+            {
+                lifetime += main.startLifetime.constantMax;
+            }
+            else
+            {
+                lifetime += 1f;
+            }
+
+            return lifetime;
         }
 
         private Vector3 GetShootDirection()
