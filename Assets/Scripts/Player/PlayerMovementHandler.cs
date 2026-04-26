@@ -36,6 +36,11 @@ namespace Player
                 m_equipmentHandler = gameObject.AddComponent<Player.PlayerEquipmentHandler>();
             }
 
+            if (GetComponent<CoffinProximityHintHandler>() == null)
+            {
+                gameObject.AddComponent<CoffinProximityHintHandler>();
+            }
+
             m_rb.useGravity = false;
             m_rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                RigidbodyConstraints.FreezeRotationY |

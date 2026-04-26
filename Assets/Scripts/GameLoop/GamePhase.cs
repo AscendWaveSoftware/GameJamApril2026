@@ -8,6 +8,5 @@ namespace GameLoop
         WaitingToStartNightTime,
         NightTime,
         NightTimeDefeated,
-        NightTimeInCoffin,
     }
 }

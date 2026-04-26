@@ -60,8 +60,7 @@ namespace GameLoop
                 { GamePhase.DaytimeInCoffin, new OnDaytimeInCoffinPhaseHandler() },
                 { GamePhase.WaitingToStartNightTime, new OnWaitingToStartNightTimePhaseHandler() },
                 { GamePhase.NightTime, new OnNightTimePhaseHandler() },
-                { GamePhase.NightTimeDefeated, new OnNightTimeDefeatedPhaseHandler() },
-                { GamePhase.NightTimeInCoffin, new OnNighttimeInCoffinPhaseHandler() }
+                { GamePhase.NightTimeDefeated, new OnNightTimeDefeatedPhaseHandler() }
             };
         }
     }
