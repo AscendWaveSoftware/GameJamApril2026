@@ -21,6 +21,7 @@ namespace Player
         [Header("Melee")] [SerializeField] private float meleeRange = 1f;
         [SerializeField] private float meleeRadius = 0.6f;
         [SerializeField] private float meleeHeightOffset = 0.6f;
+        [SerializeField] private float knifeCooldownSeconds = 0.45f;
 
         [Header("Animation")] [SerializeField] private float attackAnimationDuration = 0.12f;
 
@@ -32,6 +33,7 @@ namespace Player
         private float _lastAttackTime = -999f;
 
         public bool IsAttacking => Time.time <= _lastAttackTime + attackAnimationDuration;
+        public float MeleeReach => Mathf.Max(0f, meleeRange) + Mathf.Max(0.01f, meleeRadius);
 
         public float Damage
         {
@@ -121,7 +123,7 @@ namespace Player
                 }
 
                 DoMeleeAttack();
-                ApplyAttackCooldown();
+                ApplyKnifeCooldown();
                 return;
             }
 
@@ -136,6 +138,12 @@ namespace Player
         {
             float effectiveFireRate = Mathf.Max(0.01f, fireRate * fireRateMultiplikator);
             _nextAttackTime = Time.time + (1f / effectiveFireRate);
+            _lastAttackTime = Time.time;
+        }
+
+        private void ApplyKnifeCooldown()
+        {
+            _nextAttackTime = Time.time + Mathf.Max(0.05f, knifeCooldownSeconds);
             _lastAttackTime = Time.time;
         }
 
