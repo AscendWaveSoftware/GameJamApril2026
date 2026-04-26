@@ -148,8 +148,13 @@ MonoBehaviour:
   projectileSpawnHeight: 0.8
   projectileRadius: 0.15
   projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  meleeRange: 1
+  meleeRadius: 0.6
+  meleeHeightOffset: 0.6
+  knifeCooldownSeconds: 0.45
   attackAnimationDuration: 0.12
   playerSpriteRenderer: {fileID: 4086552143351846319}
+  equipmentHandler: {fileID: 0}
 --- !u!114 &3665080631324580796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,8 +359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358d3b4275ed4eae81dfab2bc63daa16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
-  maxHealth: 10
-  currentHealth: 10
+  maxHealth: 50
+  currentHealth: 50
 --- !u!114 &5011111111111111112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +373,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0248761cbd334b449820914a29210cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerEquipmentHandler
+  addStarterWeaponsIfEmpty: 1
+  starterKnifeFireRate: 2
+  starterKnifeDamage: 1
+  starterRifleFireRate: 6
+  starterRifleDamage: 1
 --- !u!114 &5011111111111111113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerSpriteAnimationHandler
   spriteRenderer: {fileID: 4086552143351846319}
   equipmentHandler: {fileID: 5011111111111111112}
-  movement: {fileID: 7328515070723643604}
+  movementHandler: {fileID: 7328515070723643604}
   attackHandler: {fileID: -7853757589523114716}
   framesPerSecond: 8
   idleFrames:
