@@ -1,4 +1,5 @@
 using Item;
+using Player;
 using UnityEngine;
 
 namespace GameLoop
@@ -9,7 +10,7 @@ namespace GameLoop
 
         public void Handle(GameLoopManager manager)
         {
-            Player.ScreenTitleManager.ShowTitle(@"During the day you need to collect as much gold as possible.
+            ScreenTitleManager.ShowTitle(@"During the day you need to collect as much gold as possible.
 Being exposed to the sun will dramatically speed up the time that passes.", 5);
             manager.ApplyRealSecondsPerGameMinute(manager.DayTimeRealSecondsPerGameMinute);
             foreach (var itemSpawner in Resources.FindObjectsOfTypeAll<DayTimeItemSpawner>())
@@ -17,5 +18,6 @@ Being exposed to the sun will dramatically speed up the time that passes.", 5);
                 itemSpawner.SpawnItem();
             }
         }
+        
     }
 }

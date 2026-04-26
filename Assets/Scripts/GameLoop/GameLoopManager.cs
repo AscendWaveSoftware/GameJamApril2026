@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GameLoop
 {
@@ -13,11 +16,20 @@ namespace GameLoop
         private EnvironmentDirector _environmentDirector;
         private Dictionary<GamePhase, IGamePhaseHandler> _phaseHandlers;
 
+        private void Update()
+        {
+            if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame && CurrentPhase ==  GamePhase.MainMenu)
+            {
+                SetCurrentPhase(GamePhase.DayTime);
+            }
+        }
+
         private void Awake()
         {
             _environmentDirector = FindFirstObjectByType<EnvironmentDirector>();
             BuildPhaseHandlers();
             ApplyRealSecondsPerGameMinute(0f);
+            ScreenTitleManager.ShowTitleUntilKey("To start the game press E.", KeyCode.E);
         }
 
         public void SetCurrentPhase(GamePhase newPhase)

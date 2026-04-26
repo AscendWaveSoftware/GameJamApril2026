@@ -13,14 +13,22 @@ namespace Player
         private float _showUntilUnscaledTime;
         private float _fadeStartUnscaledTime;
         private bool _isVisible;
+        private bool _waitForKeyDismiss;
+        private KeyCode _dismissKey = KeyCode.None;
 
         private GUIStyle _titleStyle;
         private Texture2D _whiteTex;
-        
+
         public static void ShowTitle(string text, float durationSeconds)
         {
             EnsureInstance();
             _instance.ShowInternal(text, durationSeconds);
+        }
+
+        public static void ShowTitleUntilKey(string text, KeyCode dismissKey)
+        {
+            EnsureInstance();
+            _instance.ShowUntilKeyInternal(text, dismissKey);
         }
 
         private static void EnsureInstance()
@@ -50,6 +58,28 @@ namespace Player
 
             _showUntilUnscaledTime = now + hold;
             _fadeStartUnscaledTime = _showUntilUnscaledTime;
+            _waitForKeyDismiss = false;
+            _dismissKey = KeyCode.None;
+            _isVisible = !string.IsNullOrEmpty(_currentText);
+        }
+
+        private void ShowUntilKeyInternal(string text, KeyCode dismissKey)
+        {
+            _currentText = string.IsNullOrWhiteSpace(text) ? string.Empty : text.Trim();
+
+            _waitForKeyDismiss = dismissKey != KeyCode.None;
+            _dismissKey = dismissKey;
+
+            float now = Time.unscaledTime;
+            _showUntilUnscaledTime = float.PositiveInfinity;
+            _fadeStartUnscaledTime = float.PositiveInfinity;
+
+            if (!_waitForKeyDismiss)
+            {
+                _showUntilUnscaledTime = now;
+                _fadeStartUnscaledTime = now;
+            }
+
             _isVisible = !string.IsNullOrEmpty(_currentText);
         }
 
@@ -69,7 +99,17 @@ namespace Player
             float now = Time.unscaledTime;
             float alpha = 1f;
 
-            if (now > _fadeStartUnscaledTime)
+            if (_waitForKeyDismiss)
+            {
+                if (_dismissKey != KeyCode.None && Event.current.type == EventType.KeyDown && Event.current.keyCode == _dismissKey)
+                {
+                    _waitForKeyDismiss = false;
+                    _showUntilUnscaledTime = now;
+                    _fadeStartUnscaledTime = now;
+                }
+            }
+
+            if (!_waitForKeyDismiss && now > _fadeStartUnscaledTime)
             {
                 float fadeT = Mathf.Clamp01((now - _fadeStartUnscaledTime) / FadeOutSeconds);
                 alpha = 1f - fadeT;
