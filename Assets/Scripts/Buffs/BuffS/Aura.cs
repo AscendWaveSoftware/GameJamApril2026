@@ -16,7 +16,7 @@ public class Aura : MonoBehaviour
 
     private void Start()
     {
-        m_player = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None)[0].transform;
+        m_player = FindObjectsByType<Player.PlayerMovementHandler>(FindObjectsSortMode.None)[0].transform;
         Radius = AuraBuff.Radius;
         Speed = AuraBuff.Speed;
     }

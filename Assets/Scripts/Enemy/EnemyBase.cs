@@ -56,7 +56,7 @@ namespace Enemy
             ApplyTypeSprite();
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
 
-            var player = FindFirstObjectByType<PlayerMovement>();
+            var player = FindFirstObjectByType<Player.PlayerMovementHandler>();
             if (player != null)
             {
                 PlayerTransform = player.transform;

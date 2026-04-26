@@ -12,17 +12,11 @@ namespace Player
         [SerializeField] private float starterRifleFireRate = 6f;
         [SerializeField] private float starterRifleDamage = 1f;
 
-        private Backpack backpack;
+        private Backpack backpack = new Backpack();
         private int _weaponIndex = -1;
 
         private void Awake()
         {
-            backpack = GetComponent<Backpack>();
-            if (backpack == null)
-            {
-                backpack = gameObject.AddComponent<Backpack>();
-            }
-
             if (addStarterWeaponsIfEmpty && (backpack.GetWeapons() == null || backpack.GetWeapons().Length == 0))
             {
                 Weapon knife = new Knife(starterKnifeFireRate, starterKnifeDamage);

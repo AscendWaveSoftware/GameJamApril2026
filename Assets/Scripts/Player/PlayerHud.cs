@@ -6,7 +6,7 @@ namespace Player
     {
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private PlayerGold playerGold;
-        private PlayerEquipmentHandler equipmentHandler;
+        private PlayerEquipmentHandler _equipmentHandler;
         [SerializeField] private Vector2 position = new Vector2(16f, 16f);
         [SerializeField] private Vector2 size = new Vector2(220f, 28f);
 
@@ -45,9 +45,9 @@ namespace Player
                     $"Gold: {playerGold.CurrentGold}");
             }
 
-            if (equipmentHandler != null)
+            if (_equipmentHandler != null)
             {
-                string weaponName = equipmentHandler.GetEquippedWeaponName();
+                string weaponName = _equipmentHandler.GetEquippedWeaponName();
                 GUI.Label(new Rect(position.x, position.y + size.y * 2 + 12f, size.x, size.y),
                     $"Weapon: {weaponName}");
             }
@@ -65,9 +65,9 @@ namespace Player
                 playerGold = FindFirstObjectByType<PlayerGold>();
             }
 
-            if (equipmentHandler == null)
+            if (_equipmentHandler == null)
             {
-                equipmentHandler = FindFirstObjectByType<PlayerEquipmentHandler>();
+                _equipmentHandler = FindFirstObjectByType<PlayerEquipmentHandler>();
             }
         }
     }

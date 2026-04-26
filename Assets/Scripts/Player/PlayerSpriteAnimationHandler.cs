@@ -1,4 +1,6 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -9,7 +11,7 @@ namespace Player
         [Header("References")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private PlayerEquipmentHandler equipmentHandler;
-        [SerializeField] private PlayerMovement movement;
+        [FormerlySerializedAs("movement")] [SerializeField] private PlayerMovementHandler movementHandler;
         [SerializeField] private PlayerAttackHandler attackHandler;
 
         [Header("Animation Speed")]
@@ -45,9 +47,9 @@ namespace Player
                 equipmentHandler = GetComponent<PlayerEquipmentHandler>();
             }
 
-            if (movement == null)
+            if (movementHandler == null)
             {
-                movement = GetComponent<PlayerMovement>();
+                movementHandler = GetComponent<PlayerMovementHandler>();
             }
 
             if (attackHandler == null)
@@ -90,9 +92,9 @@ namespace Player
 
         private Sprite[] ResolveAnimationFrames()
         {
-            bool isMoving = movement != null && movement.IsMoving;
-            bool isAttacking = attackHandler != null && attackHandler.IsAttacking;
-            Weapon equippedWeapon = equipmentHandler != null ? equipmentHandler.GetEquippedWeapon() : null;
+            bool isMoving = movementHandler && movementHandler.IsMoving;
+            bool isAttacking = attackHandler && attackHandler.IsAttacking;
+            Weapon equippedWeapon = equipmentHandler ? equipmentHandler.GetEquippedWeapon() : null;
 
             if (equippedWeapon is Knife)
             {
@@ -101,48 +103,23 @@ namespace Player
                     return GetFallbackFrames(meleeAimFrames, meleeHoldFrames, idleKnifeFrames, idleFrames);
                 }
 
-                if (isMoving)
-                {
-                    return GetFallbackFrames(meleeHoldFrames, idleKnifeFrames, idleFrames);
-                }
-
-                return GetFallbackFrames(idleKnifeFrames, idleFrames);
+                return isMoving ? GetFallbackFrames(meleeHoldFrames, idleKnifeFrames, idleFrames) : GetFallbackFrames(idleKnifeFrames, idleFrames);
             }
 
-            if (equippedWeapon is Rifle)
+            if (equippedWeapon is not Rifle)
+                return isMoving ? GetFallbackFrames(neutralMoveFrames, idleFrames) : GetFallbackFrames(idleFrames);
+            if (isAttacking)
             {
-                if (isAttacking)
-                {
-                    return GetFallbackFrames(rangeAimFrames, rangeHoldFrames, idleRifleFrames, idleFrames);
-                }
-
-                if (isMoving)
-                {
-                    return GetFallbackFrames(rangeHoldFrames, idleRifleFrames, idleFrames);
-                }
-
-                return GetFallbackFrames(idleRifleFrames, idleFrames);
+                return GetFallbackFrames(rangeAimFrames, rangeHoldFrames, idleRifleFrames, idleFrames);
             }
 
-            if (isMoving)
-            {
-                return GetFallbackFrames(neutralMoveFrames, idleFrames);
-            }
+            return isMoving ? GetFallbackFrames(rangeHoldFrames, idleRifleFrames, idleFrames) : GetFallbackFrames(idleRifleFrames, idleFrames);
 
-            return GetFallbackFrames(idleFrames);
         }
 
         private static Sprite[] GetFallbackFrames(params Sprite[][] candidates)
         {
-            for (int i = 0; i < candidates.Length; i++)
-            {
-                if (candidates[i] != null && candidates[i].Length > 0)
-                {
-                    return candidates[i];
-                }
-            }
-
-            return null;
+            return candidates.FirstOrDefault(t => t is { Length: > 0 });
         }
     }
 }

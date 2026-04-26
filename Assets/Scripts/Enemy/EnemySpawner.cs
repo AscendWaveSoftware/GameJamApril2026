@@ -18,7 +18,7 @@ namespace Enemy
 
         private void Awake()
         {
-            var playerMovement = FindFirstObjectByType<PlayerMovement>();
+            var playerMovement = FindFirstObjectByType<Player.PlayerMovementHandler>();
             if (playerMovement != null)
             {
                 _playerTransform = playerMovement.transform;

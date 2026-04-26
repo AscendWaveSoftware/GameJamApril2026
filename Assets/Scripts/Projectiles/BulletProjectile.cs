@@ -111,7 +111,7 @@ public class BulletProjectile : MonoBehaviour
                 return;
             }
 
-            PlayerMovement player = other.GetComponentInParent<PlayerMovement>();
+            Player.PlayerMovementHandler player = other.GetComponentInParent<Player.PlayerMovementHandler>();
             if (player != null)
             {
                 Destroy(gameObject);
