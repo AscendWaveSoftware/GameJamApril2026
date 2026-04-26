@@ -32,10 +32,11 @@ public class BuffSelectionHandler : MonoBehaviour
         buffSelectorWindow = new GameObject[Buffs];
         buffs = new Buff[Buffs];
 
-        List<Buff> buffbuff = new List<Buff> { 
+        List<Buff> buffbuff = new List<Buff> {
             new AuraBuff(player.transform, player.GetComponent<PlayerEquipmentHandler>().Backpack.BuffStorage),
             new AddDamage(player.GetComponent<PlayerAttackHandler>()),
-            new AddMaxHealth(player.GetComponent<PlayerHealth>()) 
+            new AddMaxHealth(player.GetComponent<PlayerHealth>()),
+            new AddSpeed(player.GetComponent<PlayerMovementHandler>())
         };
 
         for (int i = 0; i < buffs.Length; i++)

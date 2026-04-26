@@ -15,7 +15,7 @@ namespace Player
         [Header("Movement Settings")] [SerializeField]
         private float m_acceleration = 2.5f;
 
-        [SerializeField] private float m_moveSpeed = 2.5f;
+        [SerializeField] private int m_moveSpeed = 10;
 
         Rigidbody m_rb;
         [SerializeField] private bool m_characterSide;
@@ -24,6 +24,7 @@ namespace Player
         private Player.PlayerEquipmentHandler m_equipmentHandler;
 
         public bool IsMoving => m_Movement.sqrMagnitude > 0.01f;
+        public float MoveSpeed => m_moveSpeed;
 
         void Start()
         {
@@ -60,11 +61,15 @@ namespace Player
                 m_characterSide = true;
         }
 
+        public void SetMovespeed(int _newSpeed)
+        {
+            m_moveSpeed = _newSpeed;
+        }
 
         private void Movement()
         {
             Vector3 localInput = new Vector3(m_Movement.x, 0, m_Movement.y).normalized;
-            Vector3 targetSpeed = transform.TransformDirection(localInput) * m_moveSpeed;
+            Vector3 targetSpeed = transform.TransformDirection(localInput) * (m_moveSpeed / 4);
             Vector3 velocityXZ = new Vector3(m_rb.linearVelocity.x, 0, m_rb.linearVelocity.z);
             Vector3 speedDif = targetSpeed - velocityXZ;
 
