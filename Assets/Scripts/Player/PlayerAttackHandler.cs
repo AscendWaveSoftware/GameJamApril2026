@@ -34,6 +34,11 @@ namespace Player
         [SerializeField] private ParticleSystem rifleSmokeEffectPrefab;
         [SerializeField] private float generatedVfxLifetime = 1f;
 
+        [Header("Attack Audio")]
+        [SerializeField] private AudioClip shootClip;
+        [SerializeField] private float shootPitchMin = 0.88f;
+        [SerializeField] private float shootPitchMax = 1.12f;
+
         private float _nextAttackTime;
         private float _lastAttackTime = -999f;
 
@@ -164,7 +169,7 @@ namespace Player
                 Enemy.EnemyBase enemy = hits[i].GetComponentInParent<Enemy.EnemyBase>();
                 if (enemy != null)
                 {
-                    enemy.DamageEnemy(damage);
+                    enemy.DamageEnemy(damage, transform.root);
                 }
             }
 
@@ -195,6 +200,11 @@ namespace Player
                 transform.root);
 
             PlayKnifeSwooshVfx(direction);
+
+            if (shootClip != null && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayClipWithRandomPitch(shootClip, shootPitchMin, shootPitchMax);
+            }
         }
 
         private void PlayKnifeSwooshVfx(Vector3 direction)

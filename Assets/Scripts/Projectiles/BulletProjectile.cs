@@ -96,7 +96,7 @@ public class BulletProjectile : MonoBehaviour
             global::Enemy.EnemyBase enemy = other.GetComponentInParent<global::Enemy.EnemyBase>();
             if (enemy != null)
             {
-                enemy.DamageEnemy(_damage);
+                enemy.DamageEnemy(_damage, _ownerRoot);
                 Destroy(gameObject);
                 return;
             }

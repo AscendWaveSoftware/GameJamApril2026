@@ -42,6 +42,6 @@ public class Aura : MonoBehaviour
             return;
         EnemyBase enemy = other.GetComponent<EnemyBase>();
 
-        enemy.DamageEnemy(AuraBuff.Damage);
+        enemy.DamageEnemy(AuraBuff.Damage, m_player != null ? m_player.root : null);
     }
 }

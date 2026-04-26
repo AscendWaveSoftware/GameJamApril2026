@@ -8,6 +8,8 @@ namespace Currency
     [RequireComponent(typeof(SpriteRenderer))]
     public class GoldCoinPickupHandler : MonoBehaviour
     {
+        [SerializeField] private AudioClip coinCollectClip;
+
         private GoldCoin _goldCoin;
         private SphereCollider _sphereCollider;
 
@@ -36,6 +38,12 @@ namespace Currency
             }
 
             playerGold.AddGold(_goldCoin.GoldAmount);
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayClip(coinCollectClip);
+            }
+
             Destroy(gameObject);
         }
     }

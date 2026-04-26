@@ -140,3 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d5e784316e9c54a87e90eed4314fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Currency.GoldCoinPickupHandler
+  coinCollectClip: {fileID: 8300000, guid: 4ba3b1d4cf5c21a4f804eefdf67ab6f3, type: 3}

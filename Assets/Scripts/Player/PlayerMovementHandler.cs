@@ -41,6 +41,11 @@ namespace Player
                 gameObject.AddComponent<CoffinProximityHintHandler>();
             }
 
+            if (GetComponent<PlayerVoicelineHandler>() == null)
+            {
+                gameObject.AddComponent<PlayerVoicelineHandler>();
+            }
+
             m_rb.useGravity = false;
             m_rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                RigidbodyConstraints.FreezeRotationY |

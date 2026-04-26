@@ -158,7 +158,9 @@ MonoBehaviour:
   knifeSwooshEffectPrefab: {fileID: 2134371060080028812, guid: 8f4cd229fef34920a4fd1716c2de4318, type: 3}
   rifleSmokeEffectPrefab: {fileID: 2134371060080028812, guid: b95d0a53b1334cb8b4fdb8bbf6c064ca, type: 3}
   generatedVfxLifetime: 1
-  rifleSmokeFollowSpeed: 0.22
+  shootClip: {fileID: 8300000, guid: 19a15c666038c1a4984b43ae2741c235, type: 3}
+  shootPitchMin: 0.3
+  shootPitchMax: 1.12
 --- !u!114 &3665080631324580796
 MonoBehaviour:
   m_ObjectHideFlags: 0

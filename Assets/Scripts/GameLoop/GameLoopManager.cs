@@ -10,6 +10,8 @@ namespace GameLoop
         [field: SerializeField] public float DayTimeRealSecondsPerGameMinute { get; private set; } = 1f;
         [field: SerializeField] public float NightTimeRealSecondsPerGameMinute { get; private set; } = 1f;
 
+        [SerializeField] private AudioClip readyClip;
+
         public GamePhase CurrentPhase { get; private set; } = GamePhase.MainMenu;
 
         private EnvironmentDirector _environmentDirector;
@@ -60,20 +62,32 @@ namespace GameLoop
             switch (CurrentPhase)
             {
                 case GamePhase.MainMenu:
+                    PlayReadySound();
                     SetCurrentPhase(GamePhase.DayTime);
                     break;
                 case GamePhase.DayTime:
                     if (IsPlayerNearCoffin())
                     {
+                        PlayReadySound();
                         SetCurrentPhase(GamePhase.DaytimeInCoffin);
                     }
                     break;
                 case GamePhase.WaitingToStartNightTime:
+                    PlayReadySound();
                     SetCurrentPhase(GamePhase.NightTime);
                     break;
                 case GamePhase.NightTimeDefeated:
+                    PlayReadySound();
                     SetCurrentPhase(GamePhase.DayTime);
                     break;
+            }
+        }
+
+        private void PlayReadySound()
+        {
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayClip(readyClip);
             }
         }
 
