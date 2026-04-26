@@ -118,7 +118,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 7de86d4515e66a24b9bd29e02445763b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76da74dbd711595488415a0540b544a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -140,3 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d5e784316e9c54a87e90eed4314fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Currency.GoldCoinPickupHandler
+  coinCollectClip: {fileID: 8300000, guid: 4ba3b1d4cf5c21a4f804eefdf67ab6f3, type: 3}

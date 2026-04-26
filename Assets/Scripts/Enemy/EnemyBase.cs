@@ -49,6 +49,9 @@ namespace Enemy
         public event Action OnAttackPlayer;
         public event Action OnPlayerSeen;
         public event Action OnPlayerLost;
+        public static event Action<EnemyBase, Transform> OnAnyEnemyDied;
+
+        private Transform _lastDamageDealerRoot;
         
         private void Awake()
         {
@@ -84,18 +87,30 @@ namespace Enemy
         // APIs
         public void DamageEnemy(float damage)
         {
+            DamageEnemy(damage, null);
+        }
+
+        public void DamageEnemy(float damage, Transform damageDealerRoot)
+        {
             if (CurrentHealth <= 0f)
             {
                 return;
             }
 
             damage = Mathf.Max(0f, damage);
+            if (damage <= 0f)
+            {
+                return;
+            }
+
+            _lastDamageDealerRoot = damageDealerRoot;
             CurrentHealth -= damage;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
             OnDamage?.Invoke();
             if (CurrentHealth <= 0f)
             {
                 OnDeath?.Invoke();
+                OnAnyEnemyDied?.Invoke(this, _lastDamageDealerRoot);
                 Destroy(gameObject);
             }
         }

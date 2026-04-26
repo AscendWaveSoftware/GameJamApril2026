@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Player;
 
 namespace Enemy
 {
@@ -17,7 +18,10 @@ namespace Enemy
         [SerializeField] private float projectileRadius = 0.15f;
 
         private EnemyBase _enemyBase;
+        private PlayerHealth _playerHealth;
+        private PlayerAttackHandler _playerAttackHandler;
         private float _nextAttackTime;
+        private const float PlayerMeleeAdvantage = 0.15f;
 
         private void Awake()
         {
@@ -42,22 +46,48 @@ namespace Enemy
                 return;
             }
 
+            if (_playerHealth == null)
+            {
+                _playerHealth = playerTransform.GetComponentInParent<PlayerHealth>();
+            }
+
+            if (_playerAttackHandler == null)
+            {
+                _playerAttackHandler = playerTransform.GetComponentInParent<PlayerAttackHandler>();
+            }
+
             PerformAttack(playerTransform);
             _nextAttackTime = Time.time + Mathf.Max(0.05f, timeBetweenShots);
         }
 
         private bool IsPlayerInAttackRange(Transform playerTransform)
         {
+            float effectiveRange = _enemyBase.AttackRange;
+            if (_enemyBase.Type == EnemyType.Meele && _playerAttackHandler != null)
+            {
+                float cappedMeleeRange = Mathf.Max(0.1f, _playerAttackHandler.MeleeReach - PlayerMeleeAdvantage);
+                effectiveRange = Mathf.Min(effectiveRange, cappedMeleeRange);
+            }
+
             Vector3 toPlayer = playerTransform.position - transform.position;
             toPlayer.y = 0f;
-            return toPlayer.sqrMagnitude <= _enemyBase.AttackRange * _enemyBase.AttackRange;
+            return toPlayer.sqrMagnitude <= effectiveRange * effectiveRange;
         }
 
         private void PerformAttack(Transform playerTransform)
         {
+            if (!IsPlayerInAttackRange(playerTransform))
+            {
+                return;
+            }
+
             if (_enemyBase.Type == EnemyType.Ranged)
             {
                 FireProjectile(playerTransform);
+            }
+            else if (_enemyBase.Type == EnemyType.Meele && _playerHealth != null)
+            {
+                _playerHealth.TakeDamage(_enemyBase.AttackDamage);
             }
 
             // Shared attack entry-point for both enemy types.

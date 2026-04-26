@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item.DayTimeItemSpawner
   itemPrefab: {fileID: 588788255034778931, guid: 9fa4c331fe401824898c5740db887c66, type: 3}
-  spawnChance: 1
+  spawnChance: 0.8

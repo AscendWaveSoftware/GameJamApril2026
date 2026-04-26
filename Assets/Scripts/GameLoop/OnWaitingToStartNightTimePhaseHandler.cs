@@ -1,3 +1,7 @@
+using Currency;
+using Player;
+using UnityEngine;
+
 namespace GameLoop
 {
     public sealed class OnWaitingToStartNightTimePhaseHandler : IGamePhaseHandler
@@ -7,7 +11,20 @@ namespace GameLoop
         public void Handle(GameLoopManager manager)
         {
             manager.ApplyRealSecondsPerGameMinute(0f);
+            RemoveAllSpawnedCoins();
+            ScreenTitleManager.ShowTitleUntilKey("Night is ready. Press E to start.", KeyCode.E);
+        }
+
+        private static void RemoveAllSpawnedCoins()
+        {
+            GoldCoin[] coins = Object.FindObjectsByType<GoldCoin>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            for (int i = 0; i < coins.Length; i++)
+            {
+                if (coins[i] != null)
+                {
+                    Object.Destroy(coins[i].gameObject);
+                }
+            }
         }
     }
 }
-
