@@ -34,7 +34,8 @@ public class Backpack
     /// <param name="_equipable">Item to remove</param>
     public void RemoveEquipable(IAmEquipable _equipable)
     {
-        m_equipables.Remove(_equipable);
+        if(IsInList(_equipable))
+            m_equipables.Remove(_equipable);
     }
 
     /// <summary>
@@ -74,19 +75,23 @@ public class Backpack
     /// <param name="_weapon">The Weapon to Equip</param>
     public void EquipWeapon(Weapon _weapon)
     {
-        bool weaponIsInList = false;
-        foreach (IAmEquipable item in m_equipables)
-        {
-            if (item == _weapon)
-            {
-                weaponIsInList = true;
-                break;
-            }
-        }
-        if (weaponIsInList)
+        if (IsInList(_weapon))
             m_equipedWeapon = _weapon;
         else
             throw new InvalidOperationException(_weapon + "is not in List");
+    }
+
+    private bool IsInList(IAmEquipable _item)
+    {
+        foreach (IAmEquipable item in m_equipables)
+        {
+            if (item == _item)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -111,16 +116,7 @@ public class Backpack
 
     public void EquipArmor(Armor _armor)
     {
-        bool ArmorIsInList = false;
-        foreach (IAmEquipable item in m_equipables)
-        {
-            if (item == _armor)
-            {
-                ArmorIsInList = true;
-                break;
-            }
-        }
-        if (ArmorIsInList)
+        if (IsInList(_armor))
             m_equipedArmor = _armor;
         else
             throw new InvalidOperationException(_armor + "is not in List");
