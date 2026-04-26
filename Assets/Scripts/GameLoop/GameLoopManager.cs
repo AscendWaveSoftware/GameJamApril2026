@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
@@ -15,13 +14,12 @@ namespace GameLoop
 
         private EnvironmentDirector _environmentDirector;
         private Dictionary<GamePhase, IGamePhaseHandler> _phaseHandlers;
+        private CoffinProximityHintHandler _coffinHintHandler;
 
         private void Update()
         {
-            if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame && CurrentPhase ==  GamePhase.MainMenu)
-            {
-                SetCurrentPhase(GamePhase.DayTime);
-            }
+            HandleAutomaticTransitions();
+            HandleInputTransitions();
         }
 
         private void Awake()
@@ -50,6 +48,83 @@ namespace GameLoop
             }
 
             _environmentDirector.Profile.RealSecondsPerGameMinute = value;
+        }
+
+        private void HandleInputTransitions()
+        {
+            if (!IsEPressedThisFrame())
+            {
+                return;
+            }
+
+            switch (CurrentPhase)
+            {
+                case GamePhase.MainMenu:
+                    SetCurrentPhase(GamePhase.DayTime);
+                    break;
+                case GamePhase.DayTime:
+                    if (IsPlayerNearCoffin())
+                    {
+                        SetCurrentPhase(GamePhase.DaytimeInCoffin);
+                    }
+                    break;
+                case GamePhase.WaitingToStartNightTime:
+                    SetCurrentPhase(GamePhase.NightTime);
+                    break;
+                case GamePhase.NightTimeDefeated:
+                    SetCurrentPhase(GamePhase.DayTime);
+                    break;
+            }
+        }
+
+        private void HandleAutomaticTransitions()
+        {
+            ClockService clock = _environmentDirector != null ? _environmentDirector.TimeSource : null;
+            if (clock == null)
+            {
+                return;
+            }
+
+            if ((CurrentPhase == GamePhase.DayTime || CurrentPhase == GamePhase.DaytimeInCoffin) && IsAtOrAfter(clock, 18, 0))
+            {
+                SetCurrentPhase(GamePhase.WaitingToStartNightTime);
+                return;
+            }
+
+            if (CurrentPhase == GamePhase.NightTime && IsNightFinished(clock))
+            {
+                SetCurrentPhase(GamePhase.NightTimeDefeated);
+            }
+        }
+
+        private bool IsPlayerNearCoffin()
+        {
+            if (_coffinHintHandler == null)
+            {
+                _coffinHintHandler = FindFirstObjectByType<CoffinProximityHintHandler>();
+            }
+
+            return _coffinHintHandler != null && _coffinHintHandler.IsNearCoffin;
+        }
+
+        private static bool IsEPressedThisFrame()
+        {
+            return Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame;
+        }
+
+        private static bool IsAtOrAfter(ClockService clock, int targetHour, int targetMinute)
+        {
+            int current = clock.Hours * 60 + clock.Minutes;
+            int target = Mathf.Clamp(targetHour, 0, 23) * 60 + Mathf.Clamp(targetMinute, 0, 59);
+            return current >= target;
+        }
+
+        private static bool IsNightFinished(ClockService clock)
+        {
+            int current = clock.Hours * 60 + clock.Minutes;
+            int morningStart = 6 * 60;
+            int daytimeStart = 18 * 60;
+            return current >= morningStart && current < daytimeStart;
         }
 
         private void BuildPhaseHandlers()

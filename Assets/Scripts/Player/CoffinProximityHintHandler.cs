@@ -18,6 +18,8 @@ namespace Player
         private bool _isNearCoffin;
         private GameLoopManager _gameLoopManager;
 
+        public bool IsNearCoffin => _isNearCoffin;
+
         private void Update()
         {
             if (Time.unscaledTime < _nextCheckTime)
@@ -38,7 +40,7 @@ namespace Player
                 return;
             }
 
-            bool nearCoffinNow = IsNearCoffin();
+            bool nearCoffinNow = DetectNearbyCoffin();
 
             if (nearCoffinNow)
             {
@@ -67,10 +69,10 @@ namespace Player
             }
 
             GamePhase phase = _gameLoopManager.CurrentPhase;
-            return phase == GamePhase.DayTime || phase == GamePhase.NightTimeDefeated;
+            return phase == GamePhase.DayTime;
         }
 
-        private bool IsNearCoffin()
+        private bool DetectNearbyCoffin()
         {
             int hitCount = Physics.OverlapSphereNonAlloc(
                 transform.position,

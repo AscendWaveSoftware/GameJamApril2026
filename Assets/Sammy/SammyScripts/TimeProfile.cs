@@ -26,7 +26,7 @@ public class TimeProfile : ScriptableObject
     [Min(0.01f)] public float RealSecondsPerGameMinute = 1f;
 
     [Header("Start Time")]
-    [Range(0, 23)] public int StartHour = 12;
+    [Range(0, 23)] public int StartHour = 6;
     [Range(0, 59)] public int StartMinute = 0;
 
     [Header("Phase Switch (Stunden)")]
@@ -36,11 +36,11 @@ public class TimeProfile : ScriptableObject
     public int NightHour = 22;
 
     [Header("Blend Duration")]
-    [Tooltip("Sekunden für Skybox- und Light-Lerp.")]
+    [Tooltip("Sekunden fï¿½r Skybox- und Light-Lerp.")]
     [Min(0.01f)] public float TransitionSeconds = 10f;
 
     [Header("Post-Processing (Time-based)")]
-    [Tooltip("0..1 über den Tag (0 = 00:00, 0.5 = 12:00, 1 = 24:00)")]
+    [Tooltip("0..1 ï¿½ber den Tag (0 = 00:00, 0.5 = 12:00, 1 = 24:00)")]
     public Gradient PostColorFilterOverTime;
     public AnimationCurve PostExposureEVOverTime;
     public AnimationCurve BloomIntensityOverTime;
@@ -49,11 +49,11 @@ public class TimeProfile : ScriptableObject
     public bool UseACES = true;
 
     [Header("Bloom Facing Settings")]
-    [Tooltip("Dot-Wert, ab dem der Facing-Bloom anfängt.")]
+    [Tooltip("Dot-Wert, ab dem der Facing-Bloom anfï¿½ngt.")]
     [Range(-1f, 1f)] public float FacingBloomDotMin = 0.75f;
     [Tooltip("Dot-Wert, bei dem Facing-Bloom maximal ist.")]
     [Range(-1f, 1f)] public float FacingBloomDotMax = 0.98f;
-    [Tooltip("Zusätzlicher Bloom-Intensitätsbonus beim maximalem Facing.")]
+    [Tooltip("Zusï¿½tzlicher Bloom-Intensitï¿½tsbonus beim maximalem Facing.")]
     [Min(0f)] public float FacingBloomBonus = 0.6f;
 
     private void OnValidate()
