@@ -12,6 +12,17 @@ namespace GameLoop
         {
             ScreenTitleManager.ShowTitle(@"During the day you need to collect as much gold as possible.
 Being exposed to the sun will dramatically speed up the time that passes.", 5);
+
+            PlayerHealth playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                float missingHealth = playerHealth.MaxHealth - playerHealth.CurrentHealth;
+                if (missingHealth > 0f)
+                {
+                    playerHealth.AddHealth(missingHealth);
+                }
+            }
+
             manager.ApplyRealSecondsPerGameMinute(manager.DayTimeRealSecondsPerGameMinute);
             foreach (var itemSpawner in Resources.FindObjectsOfTypeAll<DayTimeItemSpawner>())
             {
