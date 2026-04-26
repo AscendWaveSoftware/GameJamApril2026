@@ -1,4 +1,5 @@
 using UnityEngine;
+using GameLoop;
 
 namespace Player
 {
@@ -7,6 +8,8 @@ namespace Player
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private PlayerGold playerGold;
         private PlayerEquipmentHandler _equipmentHandler;
+        private EnvironmentDirector _environmentDirector;
+        private GameLoopManager _gameLoopManager;
         [SerializeField] private Vector2 position = new Vector2(16f, 16f);
         [SerializeField] private Vector2 size = new Vector2(220f, 28f);
 
@@ -51,6 +54,28 @@ namespace Player
                 GUI.Label(new Rect(position.x, position.y + size.y * 2 + 12f, size.x, size.y),
                     $"Weapon: {weaponName}");
             }
+
+            if (_environmentDirector != null && _environmentDirector.TimeSource != null)
+            {
+                ClockService clock = _environmentDirector.TimeSource;
+                GUI.Label(new Rect(position.x, position.y + size.y * 3 + 18f, size.x, size.y),
+                    $"Time: {clock.Hours:00}:{clock.Minutes:00} (Day {clock.Days})");
+            }
+
+            if (_gameLoopManager != null)
+            {
+                GUI.Label(new Rect(position.x, position.y + size.y * 4 + 24f, size.x, size.y),
+                    $"Phase: {_gameLoopManager.CurrentPhase}");
+
+                if (_gameLoopManager.CurrentPhase == GamePhase.MainMenu)
+                {
+                    Rect startButtonRect = new Rect(position.x, position.y + size.y * 5 + 30f, size.x, size.y);
+                    if (GUI.Button(startButtonRect, "Start Game"))
+                    {
+                        _gameLoopManager.SetCurrentPhase(GamePhase.DayTime);
+                    }
+                }
+            }
         }
 
         private void ResolveReferences()
@@ -68,6 +93,16 @@ namespace Player
             if (_equipmentHandler == null)
             {
                 _equipmentHandler = FindFirstObjectByType<PlayerEquipmentHandler>();
+            }
+
+            if (_environmentDirector == null)
+            {
+                _environmentDirector = FindFirstObjectByType<EnvironmentDirector>();
+            }
+
+            if (_gameLoopManager == null)
+            {
+                _gameLoopManager = FindFirstObjectByType<GameLoopManager>();
             }
         }
     }

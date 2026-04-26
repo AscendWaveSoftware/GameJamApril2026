@@ -18,6 +18,11 @@ public sealed class ClockService : ITimeSource
 
     public void Tick(float _dt, float _realSecondsPerGameMinute)
     {
+        if(_realSecondsPerGameMinute <= 0f)
+        {
+            return;
+        }
+        
         acc += _dt;
         while (acc >= _realSecondsPerGameMinute)
         {
