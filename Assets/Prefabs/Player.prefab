@@ -155,6 +155,10 @@ MonoBehaviour:
   attackAnimationDuration: 0.12
   playerSpriteRenderer: {fileID: 4086552143351846319}
   equipmentHandler: {fileID: 0}
+  knifeSwooshEffectPrefab: {fileID: 2134371060080028812, guid: 8f4cd229fef34920a4fd1716c2de4318, type: 3}
+  rifleSmokeEffectPrefab: {fileID: 2134371060080028812, guid: b95d0a53b1334cb8b4fdb8bbf6c064ca, type: 3}
+  generatedVfxLifetime: 1
+  rifleSmokeFollowSpeed: 0.22
 --- !u!114 &3665080631324580796
 MonoBehaviour:
   m_ObjectHideFlags: 0

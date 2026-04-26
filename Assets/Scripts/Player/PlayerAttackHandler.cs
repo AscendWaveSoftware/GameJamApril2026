@@ -33,7 +33,6 @@ namespace Player
         [SerializeField] private ParticleSystem knifeSwooshEffectPrefab;
         [SerializeField] private ParticleSystem rifleSmokeEffectPrefab;
         [SerializeField] private float generatedVfxLifetime = 1f;
-        [SerializeField] private float rifleSmokeFollowSpeed = 0.22f;
 
         private float _nextAttackTime;
         private float _lastAttackTime = -999f;
@@ -195,7 +194,7 @@ namespace Player
                 BulletOwner.Player,
                 transform.root);
 
-            PlayRifleSmokeVfx(spawnPosition, direction);
+            PlayKnifeSwooshVfx(direction);
         }
 
         private void PlayKnifeSwooshVfx(Vector3 direction)
@@ -206,7 +205,14 @@ namespace Player
 
             if (knifeSwooshEffectPrefab != null)
             {
-                SpawnParticleFromPrefab(knifeSwooshEffectPrefab, vfxPosition, vfxRotation);
+                ParticleSystem instance = Instantiate(knifeSwooshEffectPrefab, vfxPosition, vfxRotation);
+                if (instance != null)
+                {
+                    instance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    ApplyKnifeSwooshStyle(instance);
+                    instance.Play(true);
+                    Destroy(instance.gameObject, Mathf.Max(0.25f, GetParticleLifetime(instance)));
+                }
                 return;
             }
 
@@ -224,38 +230,70 @@ namespace Player
                 if (instance != null)
                 {
                     instance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                    ApplyRifleSmokeFollow(instance, safeDirection);
+                    ApplyRifleSmokeStyle(instance);
                     instance.Play(true);
                     Destroy(instance.gameObject, Mathf.Max(0.25f, GetParticleLifetime(instance)));
                 }
                 return;
             }
 
-            SpawnGeneratedRifleSmoke(spawnPosition, vfxRotation, safeDirection);
+            SpawnGeneratedRifleSmoke(spawnPosition, vfxRotation);
         }
 
-        private void SpawnParticleFromPrefab(ParticleSystem prefab, Vector3 position, Quaternion rotation)
+        private void ApplyKnifeSwooshStyle(ParticleSystem ps)
         {
-            ParticleSystem instance = Instantiate(prefab, position, rotation);
-            if (instance == null)
+            if (ps == null)
             {
                 return;
             }
 
-            instance.Play(true);
-            Destroy(instance.gameObject, Mathf.Max(0.25f, GetParticleLifetime(instance)));
-        }
-
-        private void SpawnGeneratedKnifeSwoosh(Vector3 position, Quaternion rotation)
-        {
-            GameObject go = new GameObject("KnifeSwooshVFX");
-            go.transform.position = position;
-            go.transform.rotation = rotation;
-
-            ParticleSystem ps = go.AddComponent<ParticleSystem>();
             var main = ps.main;
             main.playOnAwake = false;
-            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            main.loop = false;
+            main.duration = 0.14f;
+            main.startLifetime = 0.18f;
+            main.startSpeed = 2.8f;
+            main.startSize = 0.22f;
+            main.startColor = new Color(1f, 1f, 1f, 0.9f);
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 28) });
+
+            var shape = ps.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Circle;
+            shape.radius = 0.36f;
+            shape.arc = 150f;
+            shape.radiusThickness = 0.05f;
+
+            var colorOverLifetime = ps.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new[]
+                {
+                    new GradientColorKey(new Color(1f, 1f, 1f), 0f),
+                    new GradientColorKey(new Color(1f, 1f, 1f), 1f)
+                },
+                new[]
+                {
+                    new GradientAlphaKey(0.9f, 0f),
+                    new GradientAlphaKey(0f, 1f)
+                });
+            colorOverLifetime.color = gradient;
+        }
+
+        private void ApplyRifleSmokeStyle(ParticleSystem ps)
+        {
+            if (ps == null)
+            {
+                return;
+            }
+
+            var main = ps.main;
+            main.playOnAwake = false;
             main.loop = false;
             main.duration = 0.16f;
             main.startLifetime = 0.22f;
@@ -273,6 +311,39 @@ namespace Player
             shape.shapeType = ParticleSystemShapeType.Cone;
             shape.angle = 36f;
             shape.radius = 0.12f;
+
+            var sizeOverLifetime = ps.sizeOverLifetime;
+            sizeOverLifetime.enabled = false;
+        }
+
+        private void SpawnGeneratedKnifeSwoosh(Vector3 position, Quaternion rotation)
+        {
+            GameObject go = new GameObject("KnifeSwooshVFX");
+            go.transform.position = position;
+            go.transform.rotation = rotation;
+
+            ParticleSystem ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.playOnAwake = false;
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            main.loop = false;
+            main.duration = 0.14f;
+            main.startLifetime = 0.18f;
+            main.startSpeed = 2.8f;
+            main.startSize = 0.22f;
+            main.startColor = new Color(1f, 1f, 1f, 0.9f);
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+
+            var emission = ps.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 28) });
+
+            var shape = ps.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Circle;
+            shape.radius = 0.36f;
+            shape.arc = 150f;
+            shape.radiusThickness = 0.05f;
 
             var colorOverLifetime = ps.colorOverLifetime;
             colorOverLifetime.enabled = true;
@@ -294,7 +365,7 @@ namespace Player
             Destroy(go, Mathf.Max(0.25f, generatedVfxLifetime));
         }
 
-        private void SpawnGeneratedRifleSmoke(Vector3 position, Quaternion rotation, Vector3 direction)
+        private void SpawnGeneratedRifleSmoke(Vector3 position, Quaternion rotation)
         {
             GameObject go = new GameObject("RifleSmokeVFX");
             go.transform.position = position;
@@ -304,56 +375,12 @@ namespace Player
             var main = ps.main;
             main.playOnAwake = false;
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            main.loop = false;
-            main.duration = 0.35f;
-            main.startLifetime = 0.45f;
-            main.startSpeed = 0.8f;
-            main.startSize = 0.16f;
-            main.startColor = new Color(0.28f, 0.28f, 0.28f, 0.72f);
-            main.simulationSpace = ParticleSystemSimulationSpace.World;
-
-            var emission = ps.emission;
-            emission.rateOverTime = 0f;
-            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 8) });
-
-            var shape = ps.shape;
-            shape.enabled = true;
-            shape.shapeType = ParticleSystemShapeType.Cone;
-            shape.angle = 10f;
-            shape.radius = 0.03f;
-
-            var sizeOverLifetime = ps.sizeOverLifetime;
-            sizeOverLifetime.enabled = true;
-            sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.EaseInOut(0f, 0.6f, 1f, 1.6f));
-
-            ApplyRifleSmokeFollow(ps, direction);
+            ApplyRifleSmokeStyle(ps);
 
             ps.Play(true);
             Destroy(go, Mathf.Max(0.25f, generatedVfxLifetime));
         }
 
-        private void ApplyRifleSmokeFollow(ParticleSystem ps, Vector3 direction)
-        {
-            if (ps == null)
-            {
-                return;
-            }
-
-            float followSpeed = Mathf.Max(0f, rifleSmokeFollowSpeed);
-            if (followSpeed <= 0f)
-            {
-                return;
-            }
-
-            Vector3 safeDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : transform.forward;
-
-            var velocityOverLifetime = ps.velocityOverLifetime;
-            velocityOverLifetime.enabled = true;
-            velocityOverLifetime.space = ParticleSystemSimulationSpace.World;
-            velocityOverLifetime.x = new ParticleSystem.MinMaxCurve(safeDirection.x * followSpeed);
-            velocityOverLifetime.y = new ParticleSystem.MinMaxCurve(safeDirection.y * followSpeed);
-            velocityOverLifetime.z = new ParticleSystem.MinMaxCurve(safeDirection.z * followSpeed);
-        }
 
         private float GetParticleLifetime(ParticleSystem ps)
         {
