@@ -12,6 +12,8 @@ namespace GameLoop
 
         [SerializeField] private AudioClip readyClip;
 
+        public Canvas BuffSelection;
+        
         public GamePhase CurrentPhase { get; private set; } = GamePhase.MainMenu;
 
         private EnvironmentDirector _environmentDirector;
