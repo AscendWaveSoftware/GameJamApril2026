@@ -9,12 +9,13 @@ public class AddDamage : Buff
 
     private int[] additionRange = { 1, 5 };
 
-    public AddDamage()
+    public AddDamage(PlayerAttackHandler pah)
     {
+        m_pah = pah;
         m_name = "Protein Drink";
         m_attackAddition = CalcAddition(additionRange);
         m_price = CalcPrice();
-        m_description = "Fügt dem Spieler " + m_attackAddition + "attack hinzu.";
+        m_description = "Fügt dem Spieler " + m_attackAddition + " attack hinzu.";
         m_currentAttack = m_pah.Damage;
     }
 

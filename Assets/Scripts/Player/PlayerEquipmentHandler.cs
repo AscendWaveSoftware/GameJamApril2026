@@ -28,6 +28,14 @@ namespace Player
             }
         }
 
+        private void OnEnable()
+        {
+            foreach (Buff buff in backpack.BuffStorage.Buffs)
+            {
+                buff.Effect();
+            }
+        }
+
         public void OnNext(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
