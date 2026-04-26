@@ -38,6 +38,7 @@ public class BuffStorage
         return false;
     }
 
+    [Obsolete]
     public bool TypeIsInList(Buff _buff)
     {
         bool foundBuff = false;

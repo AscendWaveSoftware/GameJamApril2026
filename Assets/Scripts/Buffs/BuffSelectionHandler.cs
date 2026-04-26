@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,9 +14,14 @@ public class BuffSelectionHandler : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject camera;
     [SerializeField] private GameObject uicamera;
+    [SerializeField] private GameObject statPrefab;
     [SerializeField] private GameObject canvas;
     GameObject[] buffSelectorWindow;
     Buff[] buffs;
+    GameObject[] GO_stats;
+
+    List<float> stats = new List<float>();
+    List<string> statName = new List<string>();
 
     void OnEnable()
     {
@@ -59,6 +65,39 @@ public class BuffSelectionHandler : MonoBehaviour
             int x = new int();
             x = i;
             buffTransform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnButtonClick(buffs[x]));
+        }
+
+        stats.Add(player.GetComponent<PlayerGold>().CurrentGold);
+        statName.Add("Gold");
+        stats.Add(player.GetComponent<PlayerAttackHandler>().Damage);
+        statName.Add("Damage");
+        stats.Add(player.GetComponent<PlayerHealth>().MaxHealth);
+        statName.Add("Max Health");
+
+        BuffStorage buffstorage = player.GetComponent<PlayerEquipmentHandler>().Backpack.BuffStorage;
+        AuraBuff auraBuff = buffstorage.GetBuffByType<AuraBuff>();
+        if (auraBuff != null)
+        {
+            stats.Add(auraBuff.Radius);
+            statName.Add("Aura Radius");
+            stats.Add(auraBuff.Damage);
+            statName.Add("Aura Damage");
+        }
+
+        GO_stats = new GameObject[stats.Count];
+        for (int i = 0; i <= stats.Count; i++)
+        {
+            GO_stats[i] = GameObject.Instantiate(statPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Transform statTransform = GO_stats[i].transform;
+
+            statTransform.position = new Vector3(0, 0, 0);
+            canvas = transform.parent.GameObject();
+            statTransform.parent = canvas.transform.GetChild(3);
+            statTransform.GetComponent<RectTransform>().localScale = new Vector3(1.02168f, 1.02168f, 1.02168f);
+
+            statTransform.name = i.ToString();
+
+            statTransform.GetComponent<TextMeshProUGUI>().text = statName[i] + ": " + stats[i];
         }
     }
 
