@@ -9,6 +9,7 @@ namespace Player
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(PlayerGold))]
     [RequireComponent(typeof(PlayerEquipmentHandler))]
+    // Ist leider wegen schlechter Planung defakto die PlayerBase Class
     public class PlayerMovementHandler : MonoBehaviour
     {
         [Header("Movement Settings")] [SerializeField]
