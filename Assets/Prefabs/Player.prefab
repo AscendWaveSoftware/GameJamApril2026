@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7328515070723643604}
   - component: {fileID: 3879531313411489006}
   - component: {fileID: 1601146860993998210}
-  - component: {fileID: 5011111111111111111}
   - component: {fileID: 5011111111111111112}
   - component: {fileID: 5011111111111111113}
   - component: {fileID: 852613767692641615}
@@ -357,19 +356,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerHealth
   maxHealth: 10
   currentHealth: 10
---- !u!114 &5011111111111111111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3428734882445426956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b472f60ae9327d84d8fac70390994ac5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Backpack
-  BuffStorage: {fileID: 0}
 --- !u!114 &5011111111111111112
 MonoBehaviour:
   m_ObjectHideFlags: 0

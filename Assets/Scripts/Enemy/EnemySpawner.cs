@@ -1,4 +1,5 @@
 using UnityEngine;
+using GameLoop;
 
 namespace Enemy
 {
@@ -15,6 +16,7 @@ namespace Enemy
 
         private Transform _playerTransform;
         private float _nextSpawnAttemptTime;
+        private GameLoopManager _gameLoopManager;
 
         private void Awake()
         {
@@ -24,12 +26,27 @@ namespace Enemy
                 _playerTransform = playerMovement.transform;
             }
 
+            _gameLoopManager = FindFirstObjectByType<GameLoopManager>();
             _nextSpawnAttemptTime = Random.Range(0f, spawnDelaySeconds);
         }
 
         private void Update()
         {
             if (_playerTransform == null)
+            {
+                return;
+            }
+
+            if (_gameLoopManager == null)
+            {
+                _gameLoopManager = FindFirstObjectByType<GameLoopManager>();
+                if (_gameLoopManager == null)
+                {
+                    return;
+                }
+            }
+
+            if (_gameLoopManager.CurrentPhase != GamePhase.NightTime)
             {
                 return;
             }

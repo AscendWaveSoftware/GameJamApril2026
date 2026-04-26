@@ -18,12 +18,6 @@ namespace Player
         private void Awake()
         {
             currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
-
-            if (FindFirstObjectByType<PlayerHud>() == null)
-            {
-                GameObject hudObject = new GameObject("PlayerHud");
-                hudObject.AddComponent<PlayerHud>();
-            }
         }
 
         public void TakeDamage(float amount)

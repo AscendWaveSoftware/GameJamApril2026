@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 namespace Player
 {
-    [RequireComponent(typeof(Backpack))]
     public class PlayerEquipmentHandler : MonoBehaviour
     {
         [SerializeField] private bool addStarterWeaponsIfEmpty = true;
@@ -13,6 +12,7 @@ namespace Player
         [SerializeField] private float starterRifleDamage = 1f;
 
         private Backpack backpack = new Backpack();
+        public Backpack Backpack => backpack;
         private int _weaponIndex = -1;
 
         private void Awake()

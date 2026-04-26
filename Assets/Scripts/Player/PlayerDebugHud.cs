@@ -1,9 +1,10 @@
 using UnityEngine;
 using GameLoop;
+using System;
 
 namespace Player
 {
-    public class PlayerHud : MonoBehaviour
+    public class PlayerDebugHud : MonoBehaviour
     {
         [SerializeField] private PlayerHealth playerHealth;
         [SerializeField] private PlayerGold playerGold;
@@ -73,6 +74,17 @@ namespace Player
                     if (GUI.Button(startButtonRect, "Start Game"))
                     {
                         _gameLoopManager.SetCurrentPhase(GamePhase.DayTime);
+                    }
+                }
+
+                GamePhase[] phases = (GamePhase[])Enum.GetValues(typeof(GamePhase));
+                for (int i = 0; i < phases.Length; i++)
+                {
+                    GamePhase phase = phases[i];
+                    Rect phaseButtonRect = new Rect(position.x, position.y + size.y * (6 + i) + 36f + i * 6f, size.x, size.y);
+                    if (GUI.Button(phaseButtonRect, $"Set Phase: {phase}"))
+                    {
+                        _gameLoopManager.SetCurrentPhase(phase);
                     }
                 }
             }
