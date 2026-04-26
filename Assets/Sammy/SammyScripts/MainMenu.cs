@@ -9,10 +9,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button quitButton;
     [SerializeField] private GameObject creditsPanel;
 
-    private const string MAIN_LEVEL_STRING = "SammyScene";
+    private const string MAIN_LEVEL_STRING = "Finale Game Scene";
     private bool isActive = false;
 
-    private void Awake()
+    private void Awake() 
     {
         startButton.onClick.AddListener(() =>
         {

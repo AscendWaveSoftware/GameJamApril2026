@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Sammy/SammyScene.unity
     guid: 73e5ffa8f0afff0478b0af405a6a1045
+  - enabled: 1
+    path: Assets/Scenes/Finale Game Scene.unity
+    guid: 590b6b9e9ab1da74db10cfeb03ab7517
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
