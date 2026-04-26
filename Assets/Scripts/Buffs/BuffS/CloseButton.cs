@@ -13,5 +13,6 @@ public class CloseButton : MonoBehaviour
         player.SetActive(true);
         camera.SetActive(true);
         uicamera.SetActive(false);
+        Player.ScreenTitleManager.ShowTitleUntilKey("Night is ready. Press E to start.", KeyCode.E);
     }
 }

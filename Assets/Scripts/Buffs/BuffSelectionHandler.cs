@@ -88,6 +88,8 @@ public class BuffSelectionHandler : MonoBehaviour
         GO_stats = new GameObject[stats.Count];
         for (int i = 0; i <= stats.Count; i++)
         {
+            try
+            {
             GO_stats[i] = GameObject.Instantiate(statPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             Transform statTransform = GO_stats[i].transform;
 
@@ -99,6 +101,10 @@ public class BuffSelectionHandler : MonoBehaviour
             statTransform.name = i.ToString();
 
             statTransform.GetComponent<TextMeshProUGUI>().text = statName[i] + ": " + stats[i];
+            }
+            catch
+            {
+            }
         }
     }
 

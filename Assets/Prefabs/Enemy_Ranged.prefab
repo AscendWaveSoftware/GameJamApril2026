@@ -174,9 +174,9 @@ MonoBehaviour:
   <Type>k__BackingField: 1
   <Mass>k__BackingField: 1
   <MovementSpeed>k__BackingField: 1
-  <VisionRange>k__BackingField: 10
-  <PreferredDistanceToPlayer>k__BackingField: 5
-  <DistanceTolerance>k__BackingField: 0.5
+  <VisionRange>k__BackingField: 100
+  <PreferredDistanceToPlayer>k__BackingField: 10
+  <DistanceTolerance>k__BackingField: 2
   <MaxHealth>k__BackingField: 10
   <CurrentHealth>k__BackingField: 10
   <AttackDamage>k__BackingField: 1

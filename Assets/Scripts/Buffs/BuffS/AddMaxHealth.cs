@@ -31,6 +31,14 @@ public class AddMaxHealth : Buff
     public override void Effect()
     {
         m_playerHeath.ChangeMaxHealth(m_maxHealth + m_maxHealthAddition);
-        m_bs.RemoveBuff(this);
+        try
+        {
+            m_bs.RemoveBuff(this);
+        }
+        catch
+        {
+
+        }
+
     }
 }

@@ -68,15 +68,6 @@ namespace Player
                 GUI.Label(new Rect(position.x, position.y + size.y * 4 + 24f, size.x, size.y),
                     $"Phase: {_gameLoopManager.CurrentPhase}");
 
-                if (_gameLoopManager.CurrentPhase == GamePhase.MainMenu)
-                {
-                    Rect startButtonRect = new Rect(position.x, position.y + size.y * 5 + 30f, size.x, size.y);
-                    if (GUI.Button(startButtonRect, "Start Game"))
-                    {
-                        _gameLoopManager.SetCurrentPhase(GamePhase.DayTime);
-                    }
-                }
-
                 GamePhase[] phases = (GamePhase[])Enum.GetValues(typeof(GamePhase));
                 for (int i = 0; i < phases.Length; i++)
                 {

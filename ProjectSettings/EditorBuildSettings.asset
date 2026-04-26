@@ -6,19 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-<<<<<<< Updated upstream
     path: Assets/Scenes/MainMenu.unity
     guid: 65bfccd4e306cd24583ba8b6bc92f784
   - enabled: 1
-    path: Assets/Sammy/SammyScene.unity
-    guid: 73e5ffa8f0afff0478b0af405a6a1045
-=======
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/Yu/PlayerScene.unity
-    guid: 469c3d29588a9b8408f629e057c2f6aa
->>>>>>> Stashed changes
+    path: Assets/Scenes/Finale Game Scene.unity
+    guid: 590b6b9e9ab1da74db10cfeb03ab7517
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
