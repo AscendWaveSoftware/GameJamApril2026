@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine;
 
 public class BuffStorage
 {
@@ -50,7 +48,7 @@ public class BuffStorage
                 _buff = (AuraBuff)buff;
                 foundBuff = true;
             }
-            catch (Exception){}
+            catch (Exception) { }
         }
 
         return foundBuff;
