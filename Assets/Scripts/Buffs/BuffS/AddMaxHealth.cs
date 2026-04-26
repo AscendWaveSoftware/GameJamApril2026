@@ -13,13 +13,9 @@ public class AddMaxHealth : Buff
         m_name = "Menschen Blut";
         m_maxHealthAddition = CalcAddition(additionRange);
         m_price = CalcPrice();
-        m_description = "Fügt dem Spieler " + m_maxHealthAddition + "HP hinzu.";
+        m_description = "Fügt dem Spieler " + m_maxHealthAddition + " HP hinzu.";
         m_playerHeath = _player;
         m_maxHealth = m_playerHeath.MaxHealth;
-    }
-
-    public AddMaxHealth()
-    {
     }
 
     private int CalcPrice()

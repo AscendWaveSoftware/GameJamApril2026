@@ -44,10 +44,6 @@ public class AuraBuff : Buff
         m_price = 20;
     }
 
-    public AuraBuff()
-    {
-    }
-
     public override void Effect()
     {
         Aura aura = GameObject.Instantiate(Resources.Load("Aura"), m_player.position, Quaternion.identity).GetComponent<Aura>();
