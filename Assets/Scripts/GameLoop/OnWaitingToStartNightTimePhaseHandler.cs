@@ -14,7 +14,6 @@ namespace GameLoop
         {
             manager.ApplyRealSecondsPerGameMinute(0f);
             RemoveAllSpawnedCoins();
-            ScreenTitleManager.ShowTitleUntilKey("Night is ready. Press E to start.", KeyCode.E);
             manager.BuffSelection.gameObject.SetActive(true);   
         }
 
