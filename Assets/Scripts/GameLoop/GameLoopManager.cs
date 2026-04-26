@@ -45,10 +45,11 @@ namespace GameLoop
             _phaseHandlers = new Dictionary<GamePhase, IGamePhaseHandler>
             {
                 { GamePhase.DayTime, new OnDayTimePhaseHandler() },
-                { GamePhase.InCoffin, new OnInCoffinPhaseHandler() },
+                { GamePhase.DaytimeInCoffin, new OnDaytimeInCoffinPhaseHandler() },
                 { GamePhase.WaitingToStartNightTime, new OnWaitingToStartNightTimePhaseHandler() },
                 { GamePhase.NightTime, new OnNightTimePhaseHandler() },
-                { GamePhase.NightTimeDefeated, new OnNightTimeDefeatedPhaseHandler() }
+                { GamePhase.NightTimeDefeated, new OnNightTimeDefeatedPhaseHandler() },
+                { GamePhase.NightTimeInCoffin, new OnNighttimeInCoffinPhaseHandler() }
             };
         }
     }

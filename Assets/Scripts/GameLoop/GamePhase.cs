@@ -4,9 +4,10 @@ namespace GameLoop
     {
         MainMenu,
         DayTime,
-        InCoffin,
+        DaytimeInCoffin,
         WaitingToStartNightTime,
         NightTime,
         NightTimeDefeated,
+        NightTimeInCoffin,
     }
 }

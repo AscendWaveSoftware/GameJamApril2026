@@ -1,8 +1,8 @@
 namespace GameLoop
 {
-    public sealed class OnInCoffinPhaseHandler : IGamePhaseHandler
+    public sealed class OnNighttimeInCoffinPhaseHandler : IGamePhaseHandler
     {
-        public GamePhase Phase => GamePhase.InCoffin;
+        public GamePhase Phase => GamePhase.NightTimeInCoffin;
 
         public void Handle(GameLoopManager manager)
         {
