@@ -36,8 +36,9 @@ namespace Player
 
         [Header("Attack Audio")]
         [SerializeField] private AudioClip shootClip;
-        [SerializeField] private float shootPitchMin = 0.88f;
-        [SerializeField] private float shootPitchMax = 1.12f;
+        [SerializeField] private float shootVolume = 0.3f;
+        [SerializeField] private float shootPitchMin = 0.75f;
+        [SerializeField] private float shootPitchMax = 1.25f;
 
         private float _nextAttackTime;
         private float _lastAttackTime = -999f;
@@ -203,7 +204,7 @@ namespace Player
 
             if (shootClip != null && SoundManager.Instance != null)
             {
-                SoundManager.Instance.PlayClipWithRandomPitch(shootClip, shootPitchMin, shootPitchMax);
+                SoundManager.Instance.PlayClipWithRandomPitch(shootClip, shootPitchMin, shootPitchMax, shootVolume);
             }
         }
 

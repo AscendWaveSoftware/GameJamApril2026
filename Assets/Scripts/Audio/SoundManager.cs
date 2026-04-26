@@ -49,18 +49,23 @@ public class SoundManager : MonoBehaviour
 
     /// <summary>
     /// Spielt einen AudioClip mit zufälligem Pitch ab (verhindert monotone Wiederholungen).
+    /// Verwendet ein temporäres AudioSource-Objekt damit der Pitch zuverlässig angewendet wird.
     /// </summary>
-    public void PlayClipWithRandomPitch(AudioClip clip, float minPitch = 0.9f, float maxPitch = 1.1f)
+    public void PlayClipWithRandomPitch(AudioClip clip, float minPitch = 0.9f, float maxPitch = 1.1f, float volume = 1f)
     {
-        if (clip == null || _audioSource == null)
-        {
-            return;
-        }
+        if (clip == null) return;
 
-        float originalPitch = _audioSource.pitch;
-        _audioSource.pitch = Random.Range(minPitch, maxPitch);
-        _audioSource.PlayOneShot(clip);
-        _audioSource.pitch = originalPitch;
+        GameObject tempGo = new GameObject("TempAudio_Pitched");
+        DontDestroyOnLoad(tempGo);
+        AudioSource source = tempGo.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.volume = Mathf.Clamp01(volume);
+        source.spatialBlend = 0f;
+        source.playOnAwake = false;
+        source.Play();
+        Destroy(tempGo, clip.length / Mathf.Max(0.01f, Mathf.Abs(source.pitch)) + 0.1f);
+
         _lastPlayedClip = clip;
     }
 
